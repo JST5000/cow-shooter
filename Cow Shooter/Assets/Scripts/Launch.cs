@@ -67,7 +67,6 @@ public class Launch : MonoBehaviour {
             isIdle = true;
             direction = -direction;
         }
-        print(current_rot);
         rotator.Rotate(direction * vel);
         
     }
