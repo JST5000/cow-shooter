@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class CatapultLogic : MonoBehaviour {
 
-    private bool loaded;
     private bool fire;
     private float power;
     private int maxPower;
     private int milliUntilMaxPower;
     private bool chargingUp;
 
+    public GameObject catapultArm;
+    public Launch catapultArmLogic;
+    public GameObject throwablePrefabs;
+
 	// Use this for initialization
 	void Start () {
-        loaded = false;
         fire = false;
         power = 0;
         maxPower = 100;
@@ -23,9 +25,14 @@ public class CatapultLogic : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(!loaded)
+        mouseEvents();
+		if(!catapultArmLogic.isIdle)
         {
             
+        }
+        if(catapultArmLogic.isAtMax)
+        {
+            catapultArm.GetComponent<FixedJoint2D>().connectedBody = null;
         }
         if(fire)
         {
@@ -37,26 +44,37 @@ public class CatapultLogic : MonoBehaviour {
         }
 	}
 
-    //TODO
-    private void Load()
+    private void mouseEvents()
     {
-        //Get random throwable from pool
-        //GameObject throwable = 
-        //Attach(throwable);
-        //loaded = true;
+        if (Input.GetMouseButton(0) && catapultArmLogic.isIdle)
+        {
+            loadCatapult();
+            launchThrowable();
+        }
     }
 
-    public void Attach(GameObject throwable)
+    private void loadCatapult()
     {
-        FixedJoint2D connection = GetComponent<FixedJoint2D>();
-        connection.connectedBody = throwable.GetComponent<Rigidbody2D>();
-
+        GameObject randomThrowable = instantiateRandomThrowable();
+        catapultArm.AddComponent<FixedJoint2D>();
+        FixedJoint2D connection = catapultArm.GetComponent<FixedJoint2D>();
+        connection.connectedBody = randomThrowable.GetComponent<Rigidbody2D>();
     }
 
     //TODO
     private void launchThrowable()
     {
+        if (catapultArmLogic.isIdle)
+        {
+            catapultArmLogic.activate();
+        }
+    }
 
+    private GameObject instantiateRandomThrowable()
+    {
+        List<GameObject> options = new List<GameObject>();
+        options.Add(throwablePrefabs.transform.GetChild(0).gameObject);
+        return Instantiate(options[(int)Random.Range(0, options.Count)], GetComponent<Transform>());
     }
 
     private void increasePower()
@@ -72,24 +90,4 @@ public class CatapultLogic : MonoBehaviour {
         }
     }
 
-    private void OnMouseDown()
-    {
-        chargingUp = true;
-        power = 0;
-    }
-
-    private void OnMouseUp()
-    {
-        chargingUp = false;
-        if (loaded)
-        {
-            fire = true;
-        }
-    }
-
-
-
-
-
-    
 }

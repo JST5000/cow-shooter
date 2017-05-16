@@ -11,12 +11,14 @@ public class Launch : MonoBehaviour {
     public float min_rot;
     public bool isLeftFacing;
     private int direction;
-    private bool isIdle;
+    public bool isIdle;
+    public bool isAtMax;
 
 
     // Use this for initialization
     void Start()
     {
+        isAtMax = false;
         current_rot = 0;
         rotator = GetComponent<Transform>();
         if (isLeftFacing)
@@ -60,10 +62,12 @@ public class Launch : MonoBehaviour {
         }
         if (current_rot > max_rot)
         {
+            isAtMax = true;
             direction = -direction;
         }
         if (current_rot <= min_rot)
         {
+            isAtMax = false;
             isIdle = true;
             direction = -direction;
         }
