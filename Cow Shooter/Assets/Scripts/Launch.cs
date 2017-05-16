@@ -36,15 +36,6 @@ public class Launch : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        int input_type = 1; //rmb
-        if(isLeftFacing)
-        {
-            input_type = 0; //lmb
-        }
-        if (Input.GetMouseButtonDown(input_type) && isIdle)
-        {
-            activate();
-        }
         if (!isIdle)
         {
             rotateToMax();
