@@ -13,6 +13,7 @@ public class CatapultLogic : MonoBehaviour {
     public GameObject catapultArm;
     public Launch catapultArmLogic;
     public GameObject throwablePrefabs;
+    public int inputMouse;
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +33,7 @@ public class CatapultLogic : MonoBehaviour {
         }
         if(catapultArmLogic.isAtMax)
         {
-            catapultArm.GetComponent<FixedJoint2D>().connectedBody = null;
+            Destroy(catapultArm.GetComponent<FixedJoint2D>());
         }
         if(fire)
         {
