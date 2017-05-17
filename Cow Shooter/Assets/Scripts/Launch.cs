@@ -9,6 +9,7 @@ public class Launch : MonoBehaviour {
     public bool isAtMax;
     public Rigidbody2D arm;
     public float power;
+    public float returnPower;
 
     // Use this for initialization
     void Start()
@@ -24,10 +25,9 @@ public class Launch : MonoBehaviour {
         {
             rotateToMax();
         }
-        if(arm.rotation <= 0 && isAtMax) 
+        if(isAtMax)
         {
-            isAtMax = false;
-            isIdle = true;
+            rotateToGround();
         }
     }
 
@@ -35,10 +35,22 @@ public class Launch : MonoBehaviour {
     {
         if(isLeftFacing)
         {
-            arm.AddTorque(power);
+            arm.AddTorque(-power);
         } else
         {
-            arm.AddTorque(-power);
+            arm.AddTorque(power);
+        }
+    }
+
+    private void rotateToGround()
+    {
+        if (isLeftFacing)
+        {
+            arm.AddTorque(returnPower);
+        }
+        else
+        {
+            arm.AddTorque(-returnPower);
         }
     }
 
