@@ -58,7 +58,16 @@ public class CatapultLogic : MonoBehaviour {
 
     private void loadCatapult()
     {
-        instantiateRandomThrowable();
+        GameObject throwable = instantiateRandomThrowable();
+        throwable.AddComponent<Team>();
+        Team ally = throwable.GetComponent<Team>();
+        if (catapultArmLogic.isLeftFacing)
+        {
+            ally.team = Team.suggestedTeams.Blue;
+        } else
+        {
+            ally.team = Team.suggestedTeams.Red;
+        }
         loaded = true;
     }
 
