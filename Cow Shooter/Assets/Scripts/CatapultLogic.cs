@@ -8,10 +8,6 @@ public class CatapultLogic : MonoBehaviour {
     private float power;
 
     private int milliUntilMaxPower;
-    private bool chargingUp;
-    private GameObject loadedObject;
-    private float x_mult;
-    private float y_mult;
 
     public GameObject catapultArm;
     public Launch catapultArmLogic;
@@ -26,27 +22,11 @@ public class CatapultLogic : MonoBehaviour {
         fire = false;
         power = minPower;
         milliUntilMaxPower = 1000;
-        chargingUp = false;
-        float direction;
-        if (catapultArmLogic.isLeftFacing)
-        {
-           direction = Mathf.Deg2Rad * catapultArmLogic.max_rot;
-        } else
-        {
-           direction = Mathf.Deg2Rad * (180 - catapultArmLogic.max_rot);
-        }
-        x_mult = Mathf.Cos(direction);
-        y_mult = Mathf.Sin(direction);
 	}
 
 	// Update is called once per frame
 	void Update () {
         mouseEvents();
-        if(!catapultArmLogic.isAtMax && !catapultArmLogic.isIdle)
-        {
-            loadedObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(power * x_mult, power * y_mult));
-            print(power);
-        }
         if(catapultArmLogic.isAtMax)
         {
             power = minPower;
@@ -73,14 +53,14 @@ public class CatapultLogic : MonoBehaviour {
 
     private void loadCatapult()
     {
-        loadedObject = instantiateRandomThrowable();
+        instantiateRandomThrowable();
     }
 
     private void launchThrowable()
     {
         if (catapultArmLogic.isIdle)
         {
-            catapultArmLogic.activate();
+            catapultArmLogic.activate(power);
         }
     }
 
