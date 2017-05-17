@@ -21,7 +21,7 @@ public class Launch : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (!isIdle)
+        if (!isIdle && !isAtMax)
         {
             rotateToMax();
         }
