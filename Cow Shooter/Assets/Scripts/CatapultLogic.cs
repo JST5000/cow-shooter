@@ -6,6 +6,7 @@ public class CatapultLogic : MonoBehaviour {
 
     private bool fire;
     private float power;
+    private bool loaded;
 
     private int milliUntilMaxPower;
 
@@ -20,6 +21,7 @@ public class CatapultLogic : MonoBehaviour {
     // Use this for initialization
     void Start () {
         fire = false;
+        loaded = false;
         power = minPower;
         milliUntilMaxPower = 1000;
 	}
@@ -39,14 +41,17 @@ public class CatapultLogic : MonoBehaviour {
 
     private void mouseEvents()
     {
-        if (Input.GetMouseButtonUp(inputMouse) && catapultArmLogic.isIdle)
+        if (loaded && Input.GetMouseButtonUp(inputMouse) && catapultArmLogic.isIdle)
         {
-            loadCatapult();
             launchThrowable();
         }
         if (Input.GetMouseButton(inputMouse) && catapultArmLogic.isIdle)
         {
             increasePower();
+        }
+        if(!loaded && Input.GetMouseButtonDown(inputMouse) && catapultArmLogic.isIdle )
+        {
+            loadCatapult();
         }
         
     }
@@ -54,6 +59,7 @@ public class CatapultLogic : MonoBehaviour {
     private void loadCatapult()
     {
         instantiateRandomThrowable();
+        loaded = true;
     }
 
     private void launchThrowable()
@@ -61,14 +67,18 @@ public class CatapultLogic : MonoBehaviour {
         if (catapultArmLogic.isIdle)
         {
             catapultArmLogic.activate(power);
+            loaded = false;
         }
     }
 
     private GameObject instantiateRandomThrowable()
     {
         List<GameObject> options = new List<GameObject>();
-        options.Add(throwablePrefabs.transform.GetChild(0).gameObject);
-        return Instantiate(options[(int)Random.Range(0, options.Count)], spawnpoint, new Quaternion());
+        for (int i = 0; i < throwablePrefabs.transform.childCount; i++)
+        {
+            options.Add(throwablePrefabs.transform.GetChild(i).gameObject);
+        }
+        return Instantiate(options[(int)Random.Range(0, throwablePrefabs.transform.childCount)], spawnpoint, new Quaternion());
     }
 
     private void increasePower()
