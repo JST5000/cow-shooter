@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InsideChecker : MonoBehaviour {
-    private BoxCollider2D collider;
+    private PolygonCollider2D collider;
     private ArrayList comparePoints;
     // Use this for initialization
     void Start () {
-        collider= GetComponent<BoxCollider2D>();
+
+        collider= GetComponent<PolygonCollider2D>();
+        
         GameObject backgroundTarget= GameObject.Find("BackgroundTarget");
         PointCalculator pointCalculator = backgroundTarget.GetComponent<PointCalculator>();
         comparePoints = pointCalculator.finalPoints;
