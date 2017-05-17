@@ -4,32 +4,17 @@ using UnityEngine;
 
 public class Launch : MonoBehaviour {
 
-    private Transform rotator;
-    private Vector3 vel;
-    public float max_rot;
-    private float current_rot;
-    public float min_rot;
     public bool isLeftFacing;
-    private int direction;
     public bool isIdle;
     public bool isAtMax;
-
+    public Rigidbody2D arm;
+    public float power;
+    public float returnPower;
 
     // Use this for initialization
     void Start()
     {
         isAtMax = false;
-        current_rot = 0;
-        rotator = GetComponent<Transform>();
-        if (isLeftFacing)
-        {
-            direction = -1;
-        }
-        else
-        {
-            direction = 1;
-        }
-        vel = new Vector3(0, 0, 2);
         isIdle = true;
     }
 
@@ -40,36 +25,43 @@ public class Launch : MonoBehaviour {
         {
             rotateToMax();
         }
+        if(isAtMax)
+        {
+            rotateToGround();
+        }
     }
 
     private void rotateToMax()
     {
-        if (isLeftFacing)
+        if(isLeftFacing)
         {
-            current_rot += -1 * direction * vel.z;
+            arm.AddTorque(-power);
         } else
         {
-            current_rot += direction * vel.z;
+            arm.AddTorque(power);
         }
-        if (current_rot > max_rot)
-        {
-            isAtMax = true;
-            direction = -direction;
-        }
-        if (current_rot <= min_rot)
-        {
-            isAtMax = false;
-            isIdle = true;
-            direction = -direction;
-        }
-        rotator.Rotate(direction * vel);
-        
     }
 
-    public void activate()
+    private void rotateToGround()
     {
+        if (isLeftFacing)
+        {
+            arm.AddTorque(returnPower);
+        }
+        else
+        {
+            arm.AddTorque(-returnPower);
+        }
+    }
+
+    public void activate(float pow)
+    {
+        power = pow;
         isIdle = false;
     }
-
-
+    
+    public void dropDown()
+    {
+        isAtMax = true;
+    }
 }

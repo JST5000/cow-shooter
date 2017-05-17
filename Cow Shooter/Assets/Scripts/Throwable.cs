@@ -14,6 +14,7 @@ public class Throwable : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        
+
 	}
 }
