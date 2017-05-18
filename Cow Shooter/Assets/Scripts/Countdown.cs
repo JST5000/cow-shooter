@@ -59,11 +59,12 @@ public class Countdown : MonoBehaviour
 
     public string getText()
     {
-        string output = minutes + ":" + seconds;
-        if(seconds == 0)
+        string output = minutes + ":";
+        if (seconds < 10)
         {
             output += "0";
         }
+        output += seconds;
         return output;
     }
 

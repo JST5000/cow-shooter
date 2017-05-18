@@ -35,11 +35,11 @@ public class ScoreboardLogic : MonoBehaviour {
         InsideChecker[] pointTotals = holder.GetComponentsInChildren<InsideChecker>();
         foreach(InsideChecker checker in pointTotals)
         {
-            if (checker.team == Team.suggestedTeams.Blue)
+            if (checker.team == 0) //blue
             {
                 blueFinalScore += checker.score;
             }
-            else
+            else if(checker.team == 1) //red
             {
                 redFinalScore += checker.score;
             }

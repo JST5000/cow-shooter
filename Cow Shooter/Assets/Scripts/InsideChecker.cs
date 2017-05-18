@@ -5,7 +5,7 @@ using UnityEngine;
 public class InsideChecker : MonoBehaviour {
     private PolygonCollider2D collider;
     private ArrayList comparePoints;
-    public Team.suggestedTeams team;
+    public int team;
     public int score;
     // Use this for initialization
     void Start () {
