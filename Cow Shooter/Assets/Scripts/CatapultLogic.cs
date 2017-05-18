@@ -17,6 +17,7 @@ public class CatapultLogic : MonoBehaviour {
     public int inputMouse;
     public float minPower;
     public float maxPower;
+    public GameObject throwableInstanceHolder;
 
     // Use this for initialization
     void Start () {
@@ -58,16 +59,7 @@ public class CatapultLogic : MonoBehaviour {
 
     private void loadCatapult()
     {
-        GameObject throwable = instantiateRandomThrowable();
-        throwable.AddComponent<Team>();
-        Team ally = throwable.GetComponent<Team>();
-        if (catapultArmLogic.isLeftFacing)
-        {
-            ally.team = Team.suggestedTeams.Blue;
-        } else
-        {
-            ally.team = Team.suggestedTeams.Red;
-        }
+        instantiateRandomThrowable();
         loaded = true;
     }
 
@@ -80,14 +72,30 @@ public class CatapultLogic : MonoBehaviour {
         }
     }
 
-    private GameObject instantiateRandomThrowable()
+    private void instantiateRandomThrowable()
     {
         List<GameObject> options = new List<GameObject>();
         for (int i = 0; i < throwablePrefabs.transform.childCount; i++)
         {
             options.Add(throwablePrefabs.transform.GetChild(i).gameObject);
         }
-        return Instantiate(options[(int)Random.Range(0, throwablePrefabs.transform.childCount)], spawnpoint, new Quaternion());
+        GameObject throwable = Instantiate(options[(int)Random.Range(0, throwablePrefabs.transform.childCount)], spawnpoint, new Quaternion());
+        addTeam(throwable);
+        throwable.transform.parent = throwableInstanceHolder.transform;
+    }
+
+    private void addTeam(GameObject throwable)
+    {
+        throwable.AddComponent<Team>();
+        Team ally = throwable.GetComponent<Team>();
+        if (catapultArmLogic.isLeftFacing)
+        {
+            ally.team = Team.suggestedTeams.Blue;
+        }
+        else
+        {
+            ally.team = Team.suggestedTeams.Red;
+        }
     }
 
     private void increasePower()
