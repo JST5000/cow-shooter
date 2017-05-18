@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PointCalculator : MonoBehaviour {
     public int divisions;
+    public int size;
     public ArrayList finalPoints;
 	// Use this for initialization
 	void Awake() {
@@ -19,12 +20,11 @@ public class PointCalculator : MonoBehaviour {
         float currentX = startX;
         float currentY = startY;
         finalPoints = new ArrayList();
-        int count = 1;
-        int count2 = 1;
+
         
-        while (currentY <= endY&&count<100)
+        while (currentY <= endY)
         {
-            while (currentX <= endX && count2 < 100)
+            while (currentX <= endX )
             {
                 if (collider.OverlapPoint(new Vector2(currentX, currentY)))
                 {
@@ -33,9 +33,10 @@ public class PointCalculator : MonoBehaviour {
                 currentX += increment;
             }
             currentY += increment;
-            count++;
+            currentX = startX;
         }
         collider.enabled = false;
+        size = finalPoints.Count;
     }
 	
 	// Update is called once per frame
