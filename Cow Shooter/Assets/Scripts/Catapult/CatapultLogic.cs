@@ -5,7 +5,7 @@ using UnityEngine;
 public class CatapultLogic : MonoBehaviour {
 
     private bool fire;
-    private float power;
+    public float power;
     private bool loaded;
 
     private int milliUntilMaxPower;
@@ -24,7 +24,7 @@ public class CatapultLogic : MonoBehaviour {
         fire = false;
         loaded = false;
         power = minPower;
-        milliUntilMaxPower = 1000;
+        milliUntilMaxPower = 750;
 	}
 
 	// Update is called once per frame
@@ -46,7 +46,7 @@ public class CatapultLogic : MonoBehaviour {
         {
             launchThrowable();
         }
-        if (Input.GetMouseButton(inputMouse) && catapultArmLogic.isIdle)
+        if (Input.GetMouseButton(inputMouse) && catapultArmLogic.isIdle && loaded)
         {
             increasePower();
         }
@@ -82,7 +82,13 @@ public class CatapultLogic : MonoBehaviour {
         GameObject throwable = Instantiate(options[(int)Random.Range(0, throwablePrefabs.transform.childCount)], spawnpoint, new Quaternion());
         addTeam(throwable);
         throwable.transform.parent = throwableInstanceHolder.transform;
+        Vector3 prev = throwable.transform.rotation.eulerAngles;
+        if (!catapultArmLogic.isLeftFacing)
+        {
+            throwable.transform.Rotate(new Vector3(0, 180, 0));
+        }
     }
+
 
     private void addTeam(GameObject throwable)
     {
