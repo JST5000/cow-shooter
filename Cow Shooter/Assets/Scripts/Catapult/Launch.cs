@@ -17,18 +17,22 @@ public class Launch : MonoBehaviour {
         isAtMax = false;
         isIdle = true;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         if (!isIdle && !isAtMax)
         {
             rotateToMax();
         }
-        if(isAtMax)
+        if (isAtMax)
         {
             rotateToGround();
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     private void rotateToMax()

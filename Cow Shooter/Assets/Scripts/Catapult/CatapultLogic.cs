@@ -29,19 +29,23 @@ public class CatapultLogic : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        mouseEvents();
-        if(catapultArmLogic.isAtMax)
+        if (Time.timeScale != 0)
         {
-            power = minPower;
-        }
-        if(fire)
-        {
-            launchThrowable();
+            mouseEvents();
+            if (catapultArmLogic.isAtMax)
+            {
+                power = minPower;
+            }
+            if (fire)
+            {
+                launchThrowable();
+            }
         }
 	}
 
     private void mouseEvents()
     {
+
         if (loaded && Input.GetMouseButtonUp(inputMouse) && catapultArmLogic.isIdle)
         {
             launchThrowable();

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreboardLogic : MonoBehaviour {
     GameObject holder;
@@ -46,6 +47,16 @@ public class ScoreboardLogic : MonoBehaviour {
     
         }
         print("BlueScore="+ ((double)blueFinalScore /boardSize)*100+" RedScore="+(((double)redFinalScore)/boardSize)*100);
-        
+        GetComponentInParent<Text>().text = getText(blueFinalScore, redFinalScore);
+    }
+
+    private string getText(double blueFinalScore, double redFinalScore)
+    {
+        string output = "Blue Score is ";
+        output += (int)(((double)blueFinalScore / boardSize) * 100);
+        output += "%\nRedScore is ";
+        output += (int)((((double)redFinalScore) / boardSize) * 100);
+        output += "%";
+        return output;
     }
 }
