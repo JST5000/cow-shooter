@@ -12,7 +12,7 @@ public class ScoreboardLogic : MonoBehaviour {
     public int boardSize;
     // Use this for initialization
     void Start () {
-        GameObject tempObject = GameObject.Find("BackgroundTarget");
+        GameObject tempObject = GameObject.Find("Targets");
         PointCalculator calculator = tempObject.GetComponent<PointCalculator>();
         boardSize = calculator.size;
         blueFinalScore = 0;
@@ -46,7 +46,7 @@ public class ScoreboardLogic : MonoBehaviour {
             }
     
         }
-        print("BlueScore="+ ((double)blueFinalScore /boardSize)*100+" RedScore="+(((double)redFinalScore)/boardSize)*100);
+        //print("BlueScore="+ ((double)blueFinalScore /boardSize)*100+" RedScore="+(((double)redFinalScore)/boardSize)*100);
         GetComponentInParent<Text>().text = getText(blueFinalScore, redFinalScore);
     }
 

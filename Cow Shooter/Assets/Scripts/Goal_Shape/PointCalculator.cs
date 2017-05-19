@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PointCalculator : MonoBehaviour {
+    public float transparancy;
     public int divisions;
     public int size;
+    public bool active;
     public ArrayList finalPoints;
 	// Use this for initialization
 	void Awake() {
-        Transform transform = GetComponent<Transform>();
-        Vector2 testPoint = new Vector2(transform.position.x, transform.position.y);
-        PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+        List<GameObject> listTargets = GetAllChildren(gameObject);
+        int random = ((int)Random.Range(0, listTargets.Count));
+        print("random is "+random);
+        GameObject bestTarget = listTargets[random];
+        listTargets.Remove(bestTarget);
+        Transform transform = bestTarget.GetComponent<Transform>();
+        PolygonCollider2D collider = bestTarget.GetComponent<PolygonCollider2D>();
         Bounds bounds = collider.bounds;
         float startX = bounds.center.x - bounds.extents.x;
         float endX = bounds.center.x + bounds.extents.x;
@@ -35,7 +41,13 @@ public class PointCalculator : MonoBehaviour {
             currentY += increment;
             currentX = startX;
         }
+        foreach(GameObject thing in listTargets)
+        {
+            thing.GetComponent<PolygonCollider2D>().enabled = false;
+            thing.GetComponent<SpriteRenderer>().enabled = false;
+        }
         collider.enabled = false;
+        bestTarget.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, (float)transparancy);
         size = finalPoints.Count;
     }
 	
@@ -43,4 +55,16 @@ public class PointCalculator : MonoBehaviour {
 	void Update () {
 		
 	}
+    List<GameObject> GetAllChildren(GameObject obj)
+    {
+        List<GameObject> children = new List<GameObject>();
+
+        foreach (Transform child in obj.transform)
+        {
+            children.Add(child.gameObject);
+            children.AddRange(GetAllChildren(child.gameObject));
+        }
+
+        return children;
+    }
 }

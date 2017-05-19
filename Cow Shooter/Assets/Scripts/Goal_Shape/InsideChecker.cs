@@ -12,9 +12,9 @@ public class InsideChecker : MonoBehaviour {
         score = 0;
         collider= GetComponent<PolygonCollider2D>();
         team= GetComponent<Team>().team;
-        GameObject backgroundTarget= GameObject.Find("BackgroundTarget");
-        PointCalculator pointCalculator = backgroundTarget.GetComponent<PointCalculator>();
-        comparePoints = pointCalculator.finalPoints;
+        GameObject allTargets= GameObject.Find("Targets");
+        PointCalculator rightTarget = allTargets.GetComponent<PointCalculator>();
+        comparePoints = rightTarget.finalPoints;
     }
 	
 	// Update is called once per frame
