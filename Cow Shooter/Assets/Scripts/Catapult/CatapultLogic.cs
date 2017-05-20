@@ -6,8 +6,10 @@ public class CatapultLogic : MonoBehaviour {
 
     private bool fire;
     public float power;
-    private bool loaded;
+    public bool loaded;
 	private bool powerIncreasing;
+
+	private GameObject loadedThrowable;
 
     private int milliUntilMaxPower;
 
@@ -52,7 +54,7 @@ public class CatapultLogic : MonoBehaviour {
         {
             launchThrowable();
         }
-        if (Input.GetMouseButton(inputMouse) && catapultArmLogic.isIdle && loaded)
+        if (Input.GetMouseButton(inputMouse) && loaded)
         {
 			if (powerIncreasing) {
 				increasePower ();
@@ -60,18 +62,23 @@ public class CatapultLogic : MonoBehaviour {
 				decreasePower ();
 			}
         }
-        if(!loaded && Input.GetMouseButtonDown(inputMouse) && catapultArmLogic.isIdle )
-        {
-            loadCatapult();
-        }
         
     }
 
-    private void loadCatapult()
+    public void loadCatapult()
     {
-        instantiateRandomThrowable();
+		loadedThrowable = instantiateRandomThrowable();
         loaded = true;
     }
+
+	public bool canLoad() {
+		return catapultArmLogic.isIdle;
+	}
+
+	public void replaceThrowable() {
+		Destroy (loadedThrowable);
+		loadCatapult ();
+	}
 
     private void launchThrowable()
     {
@@ -83,7 +90,7 @@ public class CatapultLogic : MonoBehaviour {
         }
     }
 
-    private void instantiateRandomThrowable()
+	private GameObject instantiateRandomThrowable()
     {
         List<GameObject> options = new List<GameObject>();
         for (int i = 0; i < throwablePrefabs.transform.childCount; i++)
@@ -98,6 +105,7 @@ public class CatapultLogic : MonoBehaviour {
         {
             throwable.transform.Rotate(new Vector3(0, 180, 0));
         }
+		return throwable;
     }
 
 
