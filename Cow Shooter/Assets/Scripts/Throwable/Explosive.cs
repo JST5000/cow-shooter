@@ -46,9 +46,9 @@ public class Explosive : MonoBehaviour {
                 {
                     Object.Destroy(this.gameObject);
                 }
-
-                explosion_radius.radius = current_radius;
-
+				if (explosion_radius != null) {
+					explosion_radius.radius = current_radius;
+				}
 
 
 
