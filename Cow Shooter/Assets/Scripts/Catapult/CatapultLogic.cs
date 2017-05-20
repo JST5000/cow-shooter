@@ -7,6 +7,7 @@ public class CatapultLogic : MonoBehaviour {
     private bool fire;
     public float power;
     private bool loaded;
+	private bool powerIncreasing;
 
     private int milliUntilMaxPower;
 
@@ -25,6 +26,7 @@ public class CatapultLogic : MonoBehaviour {
         loaded = false;
         power = minPower;
         milliUntilMaxPower = 750;
+		powerIncreasing = true;
 	}
 
 	// Update is called once per frame
@@ -52,7 +54,11 @@ public class CatapultLogic : MonoBehaviour {
         }
         if (Input.GetMouseButton(inputMouse) && catapultArmLogic.isIdle && loaded)
         {
-            increasePower();
+			if (powerIncreasing) {
+				increasePower ();
+			} else {
+				decreasePower ();
+			}
         }
         if(!loaded && Input.GetMouseButtonDown(inputMouse) && catapultArmLogic.isIdle )
         {
@@ -73,6 +79,7 @@ public class CatapultLogic : MonoBehaviour {
         {
             catapultArmLogic.activate(power);
             loaded = false;
+			powerIncreasing = true;
         }
     }
 
@@ -113,10 +120,24 @@ public class CatapultLogic : MonoBehaviour {
         if(power + deltaPower > maxPower)
         {
             power = maxPower;
+			powerIncreasing = false;
         } else
         {
             power = power + deltaPower;
         }
     }
+
+	private void decreasePower() {
+		float deltaPower = Time.deltaTime * 1000 / milliUntilMaxPower * (maxPower - minPower);
+		if(power - deltaPower < minPower)
+		{
+			power = minPower;
+			powerIncreasing = true;
+		} else
+		{
+			power = power - deltaPower;
+		}
+	
+	}
 
 }

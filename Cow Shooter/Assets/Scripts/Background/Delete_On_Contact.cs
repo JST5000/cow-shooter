@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class Delete_On_Contact : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-      
-    }
+	public Collider2D hitbox;
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-    }
+	private void OnTriggerEnter2D(Collider2D col)
+	{
+		Destroy (col.gameObject);
+	}
 }
