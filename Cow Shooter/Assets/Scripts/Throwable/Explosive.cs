@@ -9,6 +9,7 @@ public class Explosive : MonoBehaviour {
     public float explosion_speed = 1f;
     public float max_delay;
     public float power;
+	public bool dampen;
     bool exploded = false;
     float current_radius=0f;
     public CircleCollider2D explosion_radius;
@@ -58,16 +59,21 @@ public class Explosive : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (GetComponent<Transform>().parent.tag != "ThrowableHolder")
+        if (GetComponent<Transform>().parent.tag != "ThrowableHolder") //Not a prefab
         {
             if (exploded)
             {
-                print("bomb");
                 if (col.gameObject.GetComponent<Rigidbody2D>() != null)
                 {
+					
                     Vector2 target = col.gameObject.transform.position;
                     Vector2 bomb = gameObject.transform.position;
                     Vector2 direction = power* (target - bomb);
+					if (dampen) {
+						float dampeningRatio = 1 - current_radius / explosion_max_size;
+						print ("Dampening Ratio : " + dampeningRatio);
+						direction *= dampeningRatio;
+					}
                     col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction);
 
                 }
