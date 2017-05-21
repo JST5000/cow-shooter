@@ -71,7 +71,6 @@ public class Explosive : MonoBehaviour {
                     Vector2 direction = power* (target - bomb);
 					if (dampen) {
 						float dampeningRatio = 1 - current_radius / explosion_max_size;
-						print ("Dampening Ratio : " + dampeningRatio);
 						direction *= dampeningRatio;
 					}
                     col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction);

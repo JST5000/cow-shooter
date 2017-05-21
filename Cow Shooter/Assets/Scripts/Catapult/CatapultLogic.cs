@@ -104,7 +104,28 @@ public class CatapultLogic : MonoBehaviour {
         {
             options.Add(throwablePrefabs.transform.GetChild(i).gameObject);
         }
-        GameObject throwable = Instantiate(options[(int)Random.Range(0, throwablePrefabs.transform.childCount)], spawnpoint, new Quaternion());
+		float totalOdds = 0;
+		foreach (GameObject item in options) {
+			totalOdds += item.GetComponent<Randomization> ().current;
+		}
+		float rand = Random.Range (0, totalOdds);
+		int index = 0;
+		bool found = false;
+		for (int i = 0; i < options.Count; i++) {
+			if (found) {
+				options [i].GetComponent<Randomization> ().wasNotPicked ();
+			} else {
+				index = i;
+				rand -= options [i].GetComponent<Randomization> ().current;
+				if (rand < 0) {
+					options [i].GetComponent<Randomization> ().wasPicked ();
+					found = true;
+				} else {
+					options [i].GetComponent<Randomization> ().wasNotPicked ();
+				}
+			}
+		}
+        GameObject throwable = Instantiate(options[index], spawnpoint, new Quaternion());
         addTeam(throwable);
         throwable.transform.parent = throwableInstanceHolder.transform;
         Vector3 prev = throwable.transform.rotation.eulerAngles;
