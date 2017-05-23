@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class GenerateRandomThrowable : MonoBehaviour {
 
-	public GameObject spawnDefault(Vector3 spawnpoint) {
+	public GameObject spawnEntityAt(Vector3 spawnpoint, int index) {
 		List<GameObject> options = new List<GameObject>();
 		for (int i = 0; i < gameObject.transform.childCount; i++)
 		{
 			options.Add(gameObject.transform.GetChild(i).gameObject);
 		}
-		return Instantiate(options[0], spawnpoint, new Quaternion());
+		return Instantiate(options[index], spawnpoint, new Quaternion());
+	}
+
+	public GameObject presentSpawn(Vector3 spawnpoint, Quaternion rot, bool weightedRandom) {
+		List<GameObject> options = new List<GameObject>();
+		for (int i = 0; i < gameObject.transform.childCount; i++)
+		{
+			options.Add(gameObject.transform.GetChild(i).gameObject);
+		}
+		int index = Random.Range (0, options.Count);
+		while (!Equals (options [index].GetComponent<PresentBehavior> (), null)) {
+			index = Random.Range (0, options.Count);
+		}
+		GameObject throwable = Instantiate(options[index], spawnpoint, rot);
+		return throwable;
 	}
 
 	public GameObject spawnRandomizedThrowable(Vector3 spawnpoint, bool weightedRandom) {

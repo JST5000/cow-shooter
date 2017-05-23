@@ -5,6 +5,7 @@ using UnityEngine;
 public class PresentBehavior : MonoBehaviour {
 
 	public GameObject throwablePrefabs;
+	public GameObject spawnedHolder;
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +15,6 @@ public class PresentBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetMouseButtonDown(2)) {
-			print ("Trying to reroll");
 			rerollCurrentObject ();
 		}
 	}
@@ -22,16 +22,11 @@ public class PresentBehavior : MonoBehaviour {
 	private void rerollCurrentObject() {
 		if (GetComponent<Transform>().parent.tag != "ThrowableHolder") {
 			GameObject newThrowable = throwablePrefabs.GetComponent<GenerateRandomThrowable> ().
-				spawnRandomizedThrowable (gameObject.transform.position, true);
-			int i = 10;
-			while (!Equals(newThrowable.GetComponent<PresentBehavior> (), null)) {
-				if (i <= 0) {
-					newThrowable = throwablePrefabs.GetComponent<GenerateRandomThrowable> ().spawnDefault (gameObject.transform.position);
-				} else {
-					i--;
-				}
-			}
-
+				presentSpawn (gameObject.transform.position, gameObject.transform.rotation, true);
+			newThrowable.transform.parent = spawnedHolder.transform;
+			newThrowable.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity;
+			newThrowable.GetComponent<Rigidbody2D> ().angularVelocity = gameObject.GetComponent<Rigidbody2D> ().angularVelocity;
+			newThrowable.GetComponent<Team> ().team = gameObject.GetComponent<Team> ().team;
 			Destroy (gameObject);
 		}
 
