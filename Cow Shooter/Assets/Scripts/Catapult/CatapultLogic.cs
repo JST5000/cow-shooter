@@ -43,6 +43,10 @@ public class CatapultLogic : MonoBehaviour {
                 power = minPower;
 				if (loadedThrowable != null) {
 					loadedThrowable.GetComponent<Rigidbody2D> ().mass = loadedMass;
+					FirstCollision temp = loadedThrowable.GetComponent<FirstCollision> ();
+					if (temp != null) {
+						temp.launched = true;
+					}
 				}
             }
             if (fire)

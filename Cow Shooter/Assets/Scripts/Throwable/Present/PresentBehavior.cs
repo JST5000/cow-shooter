@@ -19,7 +19,7 @@ public class PresentBehavior : MonoBehaviour {
 		}
 	}
 
-	private void rerollCurrentObject() {
+	public void rerollCurrentObject() {
 		if (GetComponent<Transform>().parent.tag != "ThrowableHolder") {
 			GameObject newThrowable = throwablePrefabs.GetComponent<GenerateRandomThrowable> ().
 				presentSpawn (gameObject.transform.position, gameObject.transform.rotation, true);
