@@ -4,23 +4,41 @@ using UnityEngine;
 
 public class FirstCollision : MonoBehaviour {
 
-	public bool launched;
+	private bool launched;
 	public bool collidedAfterLaunch;
+	private float timeDelay;
+	private bool countdown;
 
 	void Start() {
 		launched = false;
 		collidedAfterLaunch = false;
+		timeDelay = .1f;
+		countdown = false;
+	}
+
+	void Update() {
+		if (countdown) {	
+			timeDelay -= Time.deltaTime;
+			if (timeDelay <= 0) {
+				launched = true;
+				countdown = false;
+			}
+		}
 	}
 
 	public bool isFirstCollision() {
 		return launched && !collidedAfterLaunch;
 	}
 
-	public void onFirstCollision () {
+	public virtual void onFirstCollision () {
 		collidedAfterLaunch = true;
 	}
 
-	void OnCollisionEnter(Collision collision)
+	public void startLaunchedTimer() {
+		countdown = true;
+	}
+
+	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (isFirstCollision()) {
 			onFirstCollision ();

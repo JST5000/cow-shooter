@@ -27,6 +27,7 @@ public class PresentBehavior : MonoBehaviour {
 			newThrowable.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity;
 			newThrowable.GetComponent<Rigidbody2D> ().angularVelocity = gameObject.GetComponent<Rigidbody2D> ().angularVelocity;
 			newThrowable.GetComponent<Team> ().team = gameObject.GetComponent<Team> ().team;
+			newThrowable.GetComponent<FirstCollision> ().startLaunchedTimer ();
 			Destroy (gameObject);
 		}
 

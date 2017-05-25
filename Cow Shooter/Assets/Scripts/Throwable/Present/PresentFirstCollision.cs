@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PresentFirstCollision : FirstCollision {
 
-	public void onFirstCollision () {
+	public override void onFirstCollision () {
 		collidedAfterLaunch = true;
 		GetComponent<PresentBehavior> ().rerollCurrentObject ();
 	}
