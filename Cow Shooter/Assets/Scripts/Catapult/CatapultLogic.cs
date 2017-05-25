@@ -90,7 +90,7 @@ public class CatapultLogic : MonoBehaviour {
 		loadCatapult ();
 	}
 
-    private void launchThrowable()
+    public void launchThrowable()
     {
         if (catapultArmLogic.isIdle)
         {

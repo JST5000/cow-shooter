@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class LoadingLogic : MonoBehaviour {
 
+	public bool replaceMode;
+
 	public float loadingTime;
 	public float timeElapsed;
 	public CatapultLogic catapult;
 	private bool tryToLoad;
+	private bool queuedThrowable;
 
 	// Use this for initialization
 	void Start () {
 		tryToLoad = false;
+		queuedThrowable = false;
 	}
 	
 	// Update is called once per frame
@@ -35,11 +39,17 @@ public class LoadingLogic : MonoBehaviour {
 	private void tryToloadCatapult() {
 		if (catapult.canLoad ()) {
 			if (catapult.loaded) {
-				catapult.replaceThrowable ();
+				if (replaceMode) {
+					catapult.replaceThrowable ();
+					tryToLoad = false;
+				} else {
+					catapult.launchThrowable ();
+				}
 			} else {
 				catapult.loadCatapult ();
+				tryToLoad = false;
 			}
-			tryToLoad = false;
+
 		}
 	}
 }
