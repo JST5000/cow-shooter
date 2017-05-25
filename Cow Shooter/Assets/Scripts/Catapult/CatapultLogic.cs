@@ -10,6 +10,8 @@ public class CatapultLogic : MonoBehaviour {
 	private bool powerIncreasing;
 
 
+	public OneWayWalls gate;
+
 	private GameObject loadedThrowable;
 
 
@@ -78,6 +80,7 @@ public class CatapultLogic : MonoBehaviour {
     {
 		loadedThrowable = instantiateRandomThrowable();
 		GetComponent<LaunchSim> ().startSim (loadedThrowable);
+		gate.ignoreCollisionWith (loadedThrowable.GetComponent<Collider2D> ());
 		loaded = true;
     }
 
