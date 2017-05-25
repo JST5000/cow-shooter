@@ -9,9 +9,9 @@ public class CatapultLogic : MonoBehaviour {
     public bool loaded;
 	private bool powerIncreasing;
 
-	public float simulatedMass;
+
 	private GameObject loadedThrowable;
-	private float loadedMass;
+
 
     private int milliUntilMaxPower;
 
@@ -42,7 +42,7 @@ public class CatapultLogic : MonoBehaviour {
             {
                 power = minPower;
 				if (loadedThrowable != null) {
-					loadedThrowable.GetComponent<Rigidbody2D> ().mass = loadedMass;
+					GetComponent<LaunchSim> ().endSim ();
 					FirstCollision temp = loadedThrowable.GetComponent<FirstCollision> ();
 					if (temp != null) {
 						temp.startLaunchedTimer();
@@ -77,8 +77,7 @@ public class CatapultLogic : MonoBehaviour {
     public void loadCatapult()
     {
 		loadedThrowable = instantiateRandomThrowable();
-		loadedMass = loadedThrowable.GetComponent<Rigidbody2D> ().mass;
-		loadedThrowable.GetComponent<Rigidbody2D> ().mass = simulatedMass;
+		GetComponent<LaunchSim> ().startSim (loadedThrowable);
 		loaded = true;
     }
 
