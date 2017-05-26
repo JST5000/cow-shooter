@@ -25,6 +25,7 @@ public class CatapultLogic : MonoBehaviour {
     public float minPower;
     public float maxPower;
     public GameObject throwableInstanceHolder;
+	private KeyCode keyboardInput;
 
     // Use this for initialization
     void Start () {
@@ -33,6 +34,11 @@ public class CatapultLogic : MonoBehaviour {
         power = minPower;
         milliUntilMaxPower = 750;
 		powerIncreasing = true;
+		if (catapultArmLogic.isLeftFacing) {
+			keyboardInput = KeyCode.A;
+		} else {
+			keyboardInput = KeyCode.D;
+		}
 	}
 
 	// Update is called once per frame
@@ -61,11 +67,11 @@ public class CatapultLogic : MonoBehaviour {
     private void mouseEvents()
     {
 
-        if (loaded && Input.GetMouseButtonUp(inputMouse) && catapultArmLogic.isIdle)
+		if (loaded && (Input.GetMouseButtonUp(inputMouse) || Input.GetKeyUp(keyboardInput)) && catapultArmLogic.isIdle)
         {
             launchThrowable();
         }
-        if (Input.GetMouseButton(inputMouse) && loaded)
+		if ((Input.GetMouseButton(inputMouse) || Input.GetKey(keyboardInput)) && loaded)
         {
 			if (powerIncreasing) {
 				increasePower ();

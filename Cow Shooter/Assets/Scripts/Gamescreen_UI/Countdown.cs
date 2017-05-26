@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,8 +48,7 @@ public class Countdown : MonoBehaviour
                 minutes--;
                 seconds = 59;
             }
-        }
-        else
+        } else
         {
             seconds--;
         }

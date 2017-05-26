@@ -13,32 +13,23 @@ public class Pause_Game : MonoBehaviour {
         pauseMessage.color = new Color(pauseMessage.color.r, pauseMessage.color.g, pauseMessage.color.b, 0f);
         pauseBackground.color = new Color(pauseBackground.color.r, pauseBackground.color.g, pauseBackground.color.b, 0f);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.P))
-        {
-            if(Time.timeScale == 0)
-            {
-                unPause();
-            } else
-            {
-                pause();
-            }
-        }
-	}
 
-    private void pause() {
+    public void pause() {
         Time.timeScale = 0;
-        pauseMessage.color = new Color(pauseMessage.color.r, pauseMessage.color.g, pauseMessage.color.b, 1f);
-        pauseBackground.color = new Color(pauseBackground.color.r, pauseBackground.color.g, pauseBackground.color.b, 1f);
-
     }
 
-    private void unPause()
+	public void showPauseMessage() {
+		pauseMessage.color = new Color(pauseMessage.color.r, pauseMessage.color.g, pauseMessage.color.b, 1f);
+		pauseBackground.color = new Color(pauseBackground.color.r, pauseBackground.color.g, pauseBackground.color.b, 1f);
+	}
+
+	public void hidePauseMessage() {
+		pauseMessage.color = new Color(pauseMessage.color.r, pauseMessage.color.g, pauseMessage.color.b, 0f);
+		pauseBackground.color = new Color(pauseBackground.color.r, pauseBackground.color.g, pauseBackground.color.b, 0f);
+	}
+
+    public void unPause()
     {
         Time.timeScale = 1;
-        pauseMessage.color = new Color(pauseMessage.color.r, pauseMessage.color.g, pauseMessage.color.b, 0f);
-        pauseBackground.color = new Color(pauseBackground.color.r, pauseBackground.color.g, pauseBackground.color.b, 0f);
     }
 }
