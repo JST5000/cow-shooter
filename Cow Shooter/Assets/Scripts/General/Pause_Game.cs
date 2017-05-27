@@ -10,6 +10,7 @@ public class Pause_Game : MonoBehaviour {
 	public GameObject canvas;
 	private GameObject pauseMenuInstance;
 	private KeyCode input;
+	private KeyCode altInput;
 
 	void Start() {
 		GameObject temp = GameObject.FindWithTag ("Settings");
@@ -19,13 +20,19 @@ public class Pause_Game : MonoBehaviour {
 		} else {
 			input = temp.GetComponent<Settings> ().pauseButton;
 		}
+		altInput = KeyCode.Escape;
 	}
 
 	void Update() {
-		if (GetComponent<InitialUI> ().isGamePlaying ()) {
-			if (Input.GetKeyDown (KeyCode.P)) {
-				pause ();
-				showPauseMessage ();
+		if (!GetComponent<InitialUI> ().gameTimer.timesUp) {
+			if (Input.GetKeyDown (input) || Input.GetKeyDown (altInput)) {
+				if (pauseMenuInstance == null) {
+					pause ();
+					showPauseMessage ();
+				} else {
+					unPause ();
+					hidePauseMessage ();
+				}
 			}
 		}
 	}

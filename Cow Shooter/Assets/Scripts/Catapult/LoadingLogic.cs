@@ -10,12 +10,10 @@ public class LoadingLogic : MonoBehaviour {
 	public float timeElapsed;
 	public CatapultLogic catapult;
 	private bool tryToLoad;
-	private bool queuedThrowable;
 
 	// Use this for initialization
 	void Start () {
 		tryToLoad = false;
-		queuedThrowable = false;
 	}
 	
 	// Update is called once per frame

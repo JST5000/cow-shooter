@@ -14,7 +14,6 @@ public class PointCalculator : MonoBehaviour {
         int random = ((int)Random.Range(0, listTargets.Count));
         GameObject bestTarget = listTargets[random];
         listTargets.Remove(bestTarget);
-        Transform transform = bestTarget.GetComponent<Transform>();
         PolygonCollider2D collider = bestTarget.GetComponent<PolygonCollider2D>();
         Bounds bounds = collider.bounds;
         float startX = bounds.center.x - bounds.extents.x;

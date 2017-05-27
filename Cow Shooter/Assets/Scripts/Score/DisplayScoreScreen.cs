@@ -48,13 +48,17 @@ public class DisplayScoreScreen : MonoBehaviour {
 			scoreScreenInstance.transform.SetParent (canvas.transform, false);
 			winner = scoreScreenInstance.GetComponentInChildren<Text> ();
 			winner.GetComponentInChildren<ScoreboardLogic> ().updateScore ();
+			scoreScreen.GetComponentInChildren<ScoreboardLogic> ().initialize ();
 		}
 		hasBeenDisplayed = true;
 	}
 
 	private void displayWinner() {
-		float blue = scoreScreen.GetComponentInChildren<ScoreboardLogic> ().blueFinalScore;
-		float red = scoreScreen.GetComponentInChildren<ScoreboardLogic> ().redFinalScore;
+		scoreScreen.GetComponentInChildren<ScoreboardLogic> ().updateScore ();
+		float blue = (int)(((double)scoreScreen.GetComponentInChildren<ScoreboardLogic> ().blueFinalScore / 
+			scoreScreen.GetComponentInChildren<ScoreboardLogic> ().boardSize) * 100);
+		float red = (int)(((double)scoreScreen.GetComponentInChildren<ScoreboardLogic> ().redFinalScore / 
+			scoreScreen.GetComponentInChildren<ScoreboardLogic> ().boardSize) * 100);
 		if (blue > red) {
 			winner.text = "Blue Wins!";
 		} else if (red > blue) {

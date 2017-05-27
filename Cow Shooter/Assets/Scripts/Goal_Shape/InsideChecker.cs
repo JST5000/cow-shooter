@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InsideChecker : MonoBehaviour {
-    private Collider2D collider;
+    private Collider2D coll;
     private ArrayList comparePoints;
     public int team;
     public int score;
@@ -12,11 +12,11 @@ public class InsideChecker : MonoBehaviour {
         score = 0;
         if (GetComponent<CircleCollider2D>() != null)
         {
-            collider = GetComponent<CircleCollider2D>();
+            coll = GetComponent<CircleCollider2D>();
         }
         else
         {
-            collider = GetComponent<PolygonCollider2D>();
+            coll = GetComponent<PolygonCollider2D>();
         }
         team= GetComponent<Team>().team;
         GameObject allTargets= GameObject.Find("Targets");
@@ -29,7 +29,7 @@ public class InsideChecker : MonoBehaviour {
 
         score = 0;
         foreach (Vector2 point in comparePoints) {
-            if (collider.OverlapPoint(point))
+            if (coll.OverlapPoint(point))
             {
                 score++;
             }

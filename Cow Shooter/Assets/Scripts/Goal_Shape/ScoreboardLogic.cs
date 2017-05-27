@@ -17,7 +17,7 @@ public class ScoreboardLogic : MonoBehaviour {
         boardSize = calculator.size;
         blueFinalScore = 0;
         redFinalScore = 0;
-        holder =GameObject.Find("ThrowableInstanceHolder");
+        holder = GameObject.Find("ThrowableInstanceHolder");
     }
 	
 	// Update is called once per frame
@@ -29,6 +29,16 @@ public class ScoreboardLogic : MonoBehaviour {
             updateCount = 0;
         }
 	}
+
+	public void initialize() {
+		GameObject tempObject = GameObject.Find("Targets");
+		PointCalculator calculator = tempObject.GetComponent<PointCalculator>();
+		boardSize = calculator.size;
+		blueFinalScore = 0;
+		redFinalScore = 0;
+		holder = GameObject.Find("ThrowableInstanceHolder");
+	}
+
     public void updateScore()
     {
         blueFinalScore = 0;
