@@ -6,17 +6,28 @@ using UnityEngine.UI;
 public class DisplayScoreScreen : MonoBehaviour {
 
 	public GameObject scoreScreen;
-	public Pause_Game pauser;
-	public Countdown gameTimer;
-	public Text winner;
+	public Vector2 center;
+	private GameObject scoreScreenInstance;
+	private Pause_Game pauser;
+	private Countdown gameTimer;
+	private Text winner;
 	private PvPScore overallCounter;
 	private bool hasBeenDisplayed;
+	private GameObject canvas;
 
 
 	// Use this for initialization
 	void Start () {
 		overallCounter = GameObject.FindGameObjectWithTag ("PvPCounter").GetComponent<PvPScore>();
 		hasBeenDisplayed = false;
+
+	}
+
+	void Awake() {
+		GameObject global_scripts = GameObject.Find ("Global_Scripts");
+		pauser = global_scripts.GetComponent<Pause_Game> ();
+		gameTimer = GameObject.Find ("GameTimer").GetComponent<Countdown>();
+		canvas = GameObject.Find ("Canvas");
 	}
 	
 	// Update is called once per frame
@@ -31,7 +42,13 @@ public class DisplayScoreScreen : MonoBehaviour {
 
 	public void displayScore() {
 		pauser.pause ();
-		scoreScreen.transform.position = new Vector2 (0, 0);
+		if (scoreScreenInstance == null) {
+			scoreScreenInstance = Instantiate(scoreScreen, center, new Quaternion());
+			scoreScreenInstance.transform.localScale = new Vector3 (1, 1, 1);
+			scoreScreenInstance.transform.SetParent (canvas.transform, false);
+			winner = scoreScreenInstance.GetComponentInChildren<Text> ();
+			winner.GetComponentInChildren<ScoreboardLogic> ().updateScore ();
+		}
 		hasBeenDisplayed = true;
 	}
 
@@ -39,16 +56,18 @@ public class DisplayScoreScreen : MonoBehaviour {
 		float blue = scoreScreen.GetComponentInChildren<ScoreboardLogic> ().blueFinalScore;
 		float red = scoreScreen.GetComponentInChildren<ScoreboardLogic> ().redFinalScore;
 		if (blue > red) {
-			winner.text = "BLUE TEAM!";
+			winner.text = "Blue Wins!";
 		} else if (red > blue) {
-			winner.text = "RED TEAM!";
+			winner.text = "Red Wins!";
 		} else {
-			winner.text = "BOTH OF YOU! TIE GAME";
+			winner.text = "Tie Game!";
 		}
 	}
 
 	public void removeScore() {
-		scoreScreen.transform.position = new Vector2 (0, 500);
+		if (scoreScreenInstance != null) {
+			Destroy (scoreScreenInstance);
+		} 
 	}
 
 	private void hideGameTimer() {

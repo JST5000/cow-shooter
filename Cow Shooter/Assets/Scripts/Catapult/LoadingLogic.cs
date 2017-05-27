@@ -20,7 +20,7 @@ public class LoadingLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GetComponent<InitialUI> ().pregameTimer.timesUp && !GetComponent<InitialUI>().gameTimer.timesUp) {
+		if (GetComponent<InitialUI> ().isGamePlaying() && !GetComponent<InitialUI>().gameTimer.timesUp) {
 			updateTime ();
 			if (tryToLoad) {
 				tryToloadCatapult ();

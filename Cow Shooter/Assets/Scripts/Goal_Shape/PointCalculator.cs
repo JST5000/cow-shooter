@@ -12,7 +12,6 @@ public class PointCalculator : MonoBehaviour {
 	void Awake() {
         List<GameObject> listTargets = GetAllChildren(gameObject);
         int random = ((int)Random.Range(0, listTargets.Count));
-        print("random is "+random);
         GameObject bestTarget = listTargets[random];
         listTargets.Remove(bestTarget);
         Transform transform = bestTarget.GetComponent<Transform>();

@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class PvPScore : MonoBehaviour {
 
+	public static PvPScore score;
 	public int blueWins;
 	public int redWins;
 
 	void Awake() {
-		if (GameObject.FindGameObjectsWithTag("PvPCounter").Length > 1) {
+		if (score == null) {
+			DontDestroyOnLoad (gameObject);
+			score = this;
+		}
+		if (score != this) {
 			Destroy (gameObject);
 		}
 	}
 
 	void Start() {
-		DontDestroyOnLoad (gameObject);
 	}
 
 	public string getWinRatioText() {
