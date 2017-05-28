@@ -34,10 +34,20 @@ public class CatapultLogic : MonoBehaviour {
         power = minPower;
         milliUntilMaxPower = 750;
 		powerIncreasing = true;
-		if (catapultArmLogic.isLeftFacing) {
-			keyboardInput = KeyCode.A;
+		GameObject settings = GameObject.Find ("SettingsHolder");
+		if (settings != null) {
+			if (catapultArmLogic.isLeft) {
+				keyboardInput = settings.GetComponent<Settings> ().leftInput;
+			} else {
+				keyboardInput = settings.GetComponent<Settings> ().rightInput;
+			}
 		} else {
-			keyboardInput = KeyCode.D;
+			print ("Settings not found, using default controls set locally in catapult logic.");
+			if (catapultArmLogic.isLeft) {
+				keyboardInput = KeyCode.A;
+			} else {
+				keyboardInput = KeyCode.D;
+			}
 		}
 	}
 
@@ -115,7 +125,7 @@ public class CatapultLogic : MonoBehaviour {
         addTeam(throwable);
         throwable.transform.parent = throwableInstanceHolder.transform;
         Vector3 prev = throwable.transform.rotation.eulerAngles;
-        if (!catapultArmLogic.isLeftFacing)
+        if (!catapultArmLogic.isLeft)
         {
             throwable.transform.Rotate(new Vector3(0, 180, 0));
         }
@@ -126,7 +136,7 @@ public class CatapultLogic : MonoBehaviour {
     private void addTeam(GameObject throwable)
     {
         Team ally = throwable.GetComponent<Team>();
-        if (catapultArmLogic.isLeftFacing)
+        if (catapultArmLogic.isLeft)
         {
             ally.team = 0; //blue
         }

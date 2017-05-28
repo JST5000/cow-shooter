@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/Game Arena.unity
+- path: Assets/_Scenes/Settings.unity
   isLoaded: 1
   isActive: 1

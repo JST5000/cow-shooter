@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Launch : MonoBehaviour {
 
-    public bool isLeftFacing;
+    public bool isLeft;
     public bool isIdle;
     public bool isAtMax;
     public Rigidbody2D arm;
@@ -31,7 +31,7 @@ public class Launch : MonoBehaviour {
 
     private void rotateToMax()
     {
-        if(isLeftFacing)
+        if(isLeft)
         {
             arm.AddTorque(-power);
         } else
@@ -42,7 +42,7 @@ public class Launch : MonoBehaviour {
 
     private void rotateToGround()
     {
-        if (isLeftFacing)
+        if (isLeft)
         {
             arm.AddTorque(returnPower);
         }
