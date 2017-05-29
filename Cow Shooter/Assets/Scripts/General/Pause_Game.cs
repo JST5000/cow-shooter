@@ -9,23 +9,16 @@ public class Pause_Game : MonoBehaviour {
 	public Vector2 center;
 	public GameObject canvas;
 	private GameObject pauseMenuInstance;
-	private KeyCode input;
-	private KeyCode altInput;
 
 	void Start() {
-		GameObject temp = GameObject.FindWithTag ("Settings");
-		if (temp == null) {
+		if (Settings.currentPreferences == null) {
 			print ("Settings not found, likely due to starting in the game arena instead of main menu. Defaulting to Keycode.P");
-			input = KeyCode.P;
-		} else {
-			input = Settings.currentPreferences.pauseButton;
 		}
-		altInput = KeyCode.Escape;
 	}
 
 	void Update() {
 		if (!GetComponent<InitialUI> ().gameTimer.timesUp) {
-			if (Input.GetKeyDown (input) || Input.GetKeyDown (altInput)) {
+			if (getInputDown()) {
 				if (pauseMenuInstance == null) {
 					pause ();
 					showPauseMessage ();
@@ -34,6 +27,14 @@ public class Pause_Game : MonoBehaviour {
 					hidePauseMessage ();
 				}
 			}
+		}
+	}
+
+	private bool getInputDown() {
+		if (Settings.currentPreferences != null) {
+			return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown (Settings.currentPreferences.pauseButton);
+		} else {
+			return Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown (KeyCode.P);
 		}
 	}
 

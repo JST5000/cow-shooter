@@ -21,11 +21,9 @@ public class CatapultLogic : MonoBehaviour {
     public Launch catapultArmLogic;
     public GameObject throwablePrefabs;
     public Vector3 spawnpoint;
-    public int inputMouse;
     public float minPower;
     public float maxPower;
     public GameObject throwableInstanceHolder;
-	private KeyCode keyboardInput;
 
     // Use this for initialization
     void Start () {
@@ -35,38 +33,49 @@ public class CatapultLogic : MonoBehaviour {
         milliUntilMaxPower = 750;
 		powerIncreasing = true;
 		GameObject settings = GameObject.Find ("SettingsHolder");
-		if (settings != null) {
+		if (settings == null) {
+			print ("Settings not found, using default controls set locally in catapult logic.");
+		}
+	}
+
+	private bool getInput() {
+		if (Settings.currentPreferences != null) {
 			if (catapultArmLogic.isLeft) {
-				keyboardInput = Settings.currentPreferences.leftInput;
+				return Input.GetKey(Settings.currentPreferences.leftInput);
 			} else {
-				keyboardInput = Settings.currentPreferences.rightInput;
+				return Input.GetKey(Settings.currentPreferences.rightInput);
 			}
 		} else {
-			print ("Settings not found, using default controls set locally in catapult logic.");
 			if (catapultArmLogic.isLeft) {
-				keyboardInput = KeyCode.A;
+				return Input.GetKey(KeyCode.A);
 			} else {
-				keyboardInput = KeyCode.D;
+				return Input.GetKey(KeyCode.D);
+			}
+		}
+	}
+
+	private bool getInputUp() {
+		if (Settings.currentPreferences != null) {
+			if (catapultArmLogic.isLeft) {
+				return Input.GetKeyUp(Settings.currentPreferences.leftInput);
+			} else {
+				return Input.GetKeyUp(Settings.currentPreferences.rightInput);
+			}
+		} else {
+			if (catapultArmLogic.isLeft) {
+				return Input.GetKeyUp(KeyCode.A);
+			} else {
+				return Input.GetKeyUp(KeyCode.D);
 			}
 		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-        if (Time.timeScale != 0)
+        if (Time.timeScale != 0) //not paused
         {
-            mouseEvents();
-            if (catapultArmLogic.isAtMax)
-            {
-                power = minPower;
-				if (loadedThrowable != null) {
-					GetComponent<LaunchSim> ().endSim ();
-					FirstCollision temp = loadedThrowable.GetComponent<FirstCollision> ();
-					if (temp != null) {
-						temp.startLaunchedTimer();
-					}
-				}
-            }
+            checkInputs();
+			atApexLogic ();
             if (fire)
             {
                 launchThrowable();
@@ -74,14 +83,14 @@ public class CatapultLogic : MonoBehaviour {
         }
 	}
 
-    private void mouseEvents()
+    private void checkInputs()
     {
 
-		if (loaded && (Input.GetMouseButtonUp(inputMouse) || Input.GetKeyUp(keyboardInput)) && catapultArmLogic.isIdle)
+		if (loaded && catapultArmLogic.isIdle && getInputUp())
         {
             launchThrowable();
         }
-		if ((Input.GetMouseButton(inputMouse) || Input.GetKey(keyboardInput)) && loaded)
+		if (loaded && getInput())
         {
 			if (powerIncreasing) {
 				increasePower ();
@@ -91,6 +100,20 @@ public class CatapultLogic : MonoBehaviour {
         }
         
     }
+
+	private void atApexLogic() {
+		if (catapultArmLogic.isAtMax)
+		{
+			power = minPower;
+			if (loadedThrowable != null) {
+				GetComponent<LaunchSim> ().endSim ();
+				FirstCollision temp = loadedThrowable.GetComponent<FirstCollision> ();
+				if (temp != null) {
+					temp.startLaunchedTimer();
+				}
+			}
+		}
+	}
 
     public void loadCatapult()
     {

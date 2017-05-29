@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[System.Serializable]
-public class SettingData : MonoBehaviour {
+[Serializable]
+public class SettingData {
 
 
 		public KeyCode leftInput;
