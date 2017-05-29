@@ -9,12 +9,7 @@ public class Settings : MonoBehaviour {
 
 	public static Settings activeSettings;
 	private static SettingData defaults;
-
-	public KeyCode leftInput;
-	public KeyCode rightInput;
-	public KeyCode pauseButton;
-	public int gameTimeMinutes;
-	public int gameTimeSeconds;
+	public static SettingData currentPreferences;
 
 	private string fileExtension = "/settings.dat";
 
@@ -27,8 +22,9 @@ public class Settings : MonoBehaviour {
 			Destroy (gameObject);
 		}
 		initializeDefaults ();
-		if (!loadChanges ()) {
-			loadDefaults ();
+		currentPreferences = loadChanges ();
+		if (currentPreferences == null) {
+			currentPreferences = defaults;
 		}
 	}
 
@@ -39,14 +35,7 @@ public class Settings : MonoBehaviour {
 		defaults.pauseButton = KeyCode.P;
 		defaults.gameTimeMinutes = 1;
 		defaults.gameTimeSeconds = 0;
-	}
-
-	private void loadDefaults() {
-		leftInput = defaults.leftInput;
-		rightInput = defaults.rightInput;
-		pauseButton = defaults.pauseButton;
-		gameTimeMinutes = defaults.gameTimeMinutes;
-		gameTimeSeconds = defaults.gameTimeSeconds;
+		defaults.enableAI = true;
 	}
 
 	public void saveChanges() {
@@ -54,37 +43,31 @@ public class Settings : MonoBehaviour {
 		FileStream file = new FileStream (Application.persistentDataPath + fileExtension, FileMode.Open);
 
 		SettingData newSettings = new SettingData ();
-		newSettings.leftInput = leftInput;
-		newSettings.rightInput = rightInput;
-		newSettings.pauseButton = pauseButton;
-		newSettings.gameTimeMinutes = gameTimeMinutes;
-		newSettings.gameTimeSeconds = gameTimeSeconds;
+		newSettings.leftInput = currentPreferences.leftInput;
+		newSettings.rightInput = currentPreferences.rightInput;
+		newSettings.pauseButton = currentPreferences.pauseButton;
+		newSettings.gameTimeMinutes = currentPreferences.gameTimeMinutes;
+		newSettings.gameTimeSeconds = currentPreferences.gameTimeSeconds;
+		newSettings.enableAI = currentPreferences.enableAI;
 
 		bf.Serialize (file, newSettings);
 		file.Close ();
 	}
 
-	public bool loadChanges() {
+	public SettingData loadChanges() {
 		if (File.Exists (Application.persistentDataPath + fileExtension)) {
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream file = File.Open(Application.persistentDataPath + fileExtension, FileMode.Open);
 			SettingData prevInfo = (SettingData)bf.Deserialize (file);
-			leftInput = prevInfo.leftInput;
-			rightInput = prevInfo.rightInput;
-			pauseButton = prevInfo.pauseButton;
-			gameTimeMinutes = prevInfo.gameTimeMinutes;
-			gameTimeSeconds = prevInfo.gameTimeSeconds;
-			return true;
-		}
-		return false;
-	}
+			currentPreferences.leftInput = prevInfo.leftInput;
+			currentPreferences.rightInput = prevInfo.rightInput;
+			currentPreferences.pauseButton = prevInfo.pauseButton;
+			currentPreferences.gameTimeMinutes = prevInfo.gameTimeMinutes;
+			currentPreferences.gameTimeSeconds = prevInfo.gameTimeSeconds;
+			currentPreferences.enableAI = prevInfo.enableAI;
 
-	[Serializable]
-	class SettingData {
-		public KeyCode leftInput = KeyCode.A;
-		public KeyCode rightInput = KeyCode.D;
-		public KeyCode pauseButton = KeyCode.P;
-		public int gameTimeMinutes = 1;
-		public int gameTimeSeconds = 0;
+			return prevInfo;
+		}
+		return null;
 	}
 }

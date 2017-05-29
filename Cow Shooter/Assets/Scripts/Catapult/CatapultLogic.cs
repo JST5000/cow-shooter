@@ -37,9 +37,9 @@ public class CatapultLogic : MonoBehaviour {
 		GameObject settings = GameObject.Find ("SettingsHolder");
 		if (settings != null) {
 			if (catapultArmLogic.isLeft) {
-				keyboardInput = settings.GetComponent<Settings> ().leftInput;
+				keyboardInput = Settings.currentPreferences.leftInput;
 			} else {
-				keyboardInput = settings.GetComponent<Settings> ().rightInput;
+				keyboardInput = Settings.currentPreferences.rightInput;
 			}
 		} else {
 			print ("Settings not found, using default controls set locally in catapult logic.");

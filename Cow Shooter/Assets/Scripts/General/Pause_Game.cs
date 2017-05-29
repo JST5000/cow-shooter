@@ -18,7 +18,7 @@ public class Pause_Game : MonoBehaviour {
 			print ("Settings not found, likely due to starting in the game arena instead of main menu. Defaulting to Keycode.P");
 			input = KeyCode.P;
 		} else {
-			input = temp.GetComponent<Settings> ().pauseButton;
+			input = Settings.currentPreferences.pauseButton;
 		}
 		altInput = KeyCode.Escape;
 	}
