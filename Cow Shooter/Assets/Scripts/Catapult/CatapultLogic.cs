@@ -9,11 +9,14 @@ public class CatapultLogic : MonoBehaviour {
     public bool loaded;
 	private bool powerIncreasing;
 
+	public float targetAIPercent;
+	public float AITolerance;
+	private float randomAIPower;
+
 
 	public OneWayWalls gate;
 
 	private GameObject loadedThrowable;
-
 
     private int milliUntilMaxPower;
 
@@ -24,6 +27,7 @@ public class CatapultLogic : MonoBehaviour {
     public float minPower;
     public float maxPower;
     public GameObject throwableInstanceHolder;
+
 
     // Use this for initialization
     void Start () {
@@ -54,6 +58,8 @@ public class CatapultLogic : MonoBehaviour {
 		}
 	}
 
+
+
 	private bool getInputUp() {
 		if (Settings.currentPreferences != null) {
 			if (catapultArmLogic.isLeft) {
@@ -74,13 +80,45 @@ public class CatapultLogic : MonoBehaviour {
 	void Update () {
         if (Time.timeScale != 0) //not paused
         {
-            checkInputs();
+			if (Settings.currentPreferences != null) {
+				if (Settings.currentPreferences.enableAI && !catapultArmLogic.isLeft) {
+					AILogic ();
+				} else {
+					checkInputs ();
+				}
+			} else {
+				checkInputs ();
+			}
 			atApexLogic ();
             if (fire)
             {
                 launchThrowable();
             }
         }
+	}
+
+	private void AILogic() {
+		if (loaded && catapultArmLogic.isIdle && powerAboveAIPower())
+		{
+			launchThrowable();
+		}
+		if (loaded)
+		{
+			if (powerIncreasing) {
+				increasePower ();
+			} else {
+				decreasePower ();
+			}
+		}
+	}
+
+	private bool powerAboveAIPower() {
+		if (power > randomAIPower) {
+			randomAIPower = ((float)(Random.Range (0, 2 * AITolerance) + targetAIPercent - AITolerance) * (maxPower - minPower) / 100) + minPower;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
     private void checkInputs()
