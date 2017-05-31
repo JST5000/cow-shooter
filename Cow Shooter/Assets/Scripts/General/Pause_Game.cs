@@ -9,8 +9,10 @@ public class Pause_Game : MonoBehaviour {
 	public Vector2 center;
 	public GameObject canvas;
 	private GameObject pauseMenuInstance;
+	private bool paused;
 
 	void Start() {
+		paused = false;
 		if (Settings.currentPreferences == null) {
 			print ("Settings not found, likely due to starting in the game arena instead of main menu. Defaulting to Keycode.P");
 		}
@@ -18,15 +20,15 @@ public class Pause_Game : MonoBehaviour {
 
 	void Update() {
 		if (!GetComponent<InitialUI> ().gameTimer.timesUp) {
-			if (getInputDown()) {
-				if (pauseMenuInstance == null) {
+			if (getInputDown ()) {
+				if (!paused) {
 					pause ();
 					showPauseMessage ();
 				} else {
 					unPause ();
 					hidePauseMessage ();
 				}
-			}
+			} 
 		}
 	}
 
@@ -40,6 +42,7 @@ public class Pause_Game : MonoBehaviour {
 
     public void pause() {
         Time.timeScale = 0;
+		paused = true;
     }
 
 	public void showPauseMessage() {
@@ -59,5 +62,6 @@ public class Pause_Game : MonoBehaviour {
     public void unPause()
     {
         Time.timeScale = 1;
+		paused = false;
     }
 }

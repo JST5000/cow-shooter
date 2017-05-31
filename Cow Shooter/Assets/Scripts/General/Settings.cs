@@ -72,4 +72,8 @@ public class Settings : MonoBehaviour {
 		destination.gameTimeSeconds = source.gameTimeSeconds;
 		destination.enableAI = source.enableAI;
 	}
+
+	public static void resetData() {
+		File.Delete (Application.persistentDataPath + fileExtension);
+	}
 }

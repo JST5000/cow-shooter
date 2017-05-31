@@ -4,40 +4,33 @@ using UnityEngine;
 
 public class ControlsMenu : MonoBehaviour {
 
-	public void alterLeftBind() {
-		while(!Input.anyKeyDown) {
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			exitToGame ();
 		}
-		Settings.currentPreferences.leftInput = getKeyPressed ();
 	}
 
-	public void alterRightBind() {
-		while (!Input.anyKeyDown) {
-		}
-		Settings.currentPreferences.rightInput = getKeyPressed ();
+	public void exitToGame() {
+		GameObject permanent = GameObject.Find ("Global_Scripts");
+		permanent.GetComponent<Pause_Game> ().unPause ();
+		destroySelf ();
 	}
 
-	public void alterPauseButton() {
-		while (!Input.anyKeyDown) {
-		}
-		Settings.currentPreferences.pauseButton = getKeyPressed ();
+	public void exitToSettings() {
+		GameObject permanent = GameObject.Find ("Global_Scripts");
+		permanent.GetComponent<Pause_Game> ().showPauseMessage();
+		destroySelf ();
 	}
 
 	public void destroySelf() {
+		apply ();
 		Destroy (gameObject);
 	}
 
 	public void apply() {
-		Settings.saveChanges ();
-	}
-
-	private KeyCode getKeyPressed() {
-
-		foreach(KeyCode vKey in System.Enum.GetValues(typeof(KeyCode))){
-			if(Input.GetKey(vKey)){
-				return vKey;
-			}
+		if (Settings.currentPreferences != null) {
+			Settings.saveChanges ();
 		}
-		print ("No key was pressed");
-		return KeyCode.Space;
 	}
+		
 }
