@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	public void resumeGame() {
-		globalScripts.GetComponent<Pause_Game> ().hidePauseMessage ();
+		MenuHolder.hideCurrentMenu ();
 		globalScripts.GetComponent<Pause_Game> ().unPause ();
 	}
 
@@ -20,8 +20,8 @@ public class PauseMenu : MonoBehaviour {
 		globalScripts.GetComponent<SceneShift> ().shiftScene ("Main Menu");
 	}
 
-	public void showOptionMenu() {
-		//TODO
+	public void goToSettings() {
+		MenuHolder.showControlsMenu ();
 	}
 
 	public void exit() {

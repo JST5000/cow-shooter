@@ -7,7 +7,7 @@ public class PauseOption : MonoBehaviour {
 
 	private bool readyForNew;
 
-	void Awake() {
+	void Start() {
 		displayValue ();
 	}
 

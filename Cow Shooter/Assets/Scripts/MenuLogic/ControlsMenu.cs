@@ -1,30 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ControlsMenu : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			exitToGame ();
+			exitToScene ();
 		}
 	}
 
-	public void exitToGame() {
+	public void exitButton() {
+		if (SceneManager.GetActiveScene ().name == "Game Arena") {
+			exitToSettings ();
+		} else if (SceneManager.GetActiveScene ().name == "Main Menu") {
+			exitInMainMenu ();
+		}
+	}
+
+	private void exitInMainMenu() {
+		apply ();
+		MenuHolder.hideCurrentMenu ();
+	}
+
+	public void exitToScene() {
+		apply ();
 		GameObject permanent = GameObject.Find ("Global_Scripts");
 		permanent.GetComponent<Pause_Game> ().unPause ();
-		destroySelf ();
+		MenuHolder.hideCurrentMenu ();
 	}
 
 	public void exitToSettings() {
-		GameObject permanent = GameObject.Find ("Global_Scripts");
-		permanent.GetComponent<Pause_Game> ().showPauseMessage();
-		destroySelf ();
-	}
-
-	public void destroySelf() {
 		apply ();
-		Destroy (gameObject);
+		MenuHolder.showPauseMenu ();
+		//TODO change this to settings when settings is made
 	}
 
 	public void apply() {

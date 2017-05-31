@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class Pause_Game : MonoBehaviour {
 
-	public GameObject pauseMenu;
 	public Vector2 center;
 	public GameObject canvas;
-	private GameObject pauseMenuInstance;
 	private bool paused;
 
 	void Start() {
@@ -23,10 +21,12 @@ public class Pause_Game : MonoBehaviour {
 			if (getInputDown ()) {
 				if (!paused) {
 					pause ();
-					showPauseMessage ();
+					MenuHolder.showPauseMenu ();
 				} else {
 					unPause ();
-					hidePauseMessage ();
+					if (MenuHolder.currentDisplay != null && MenuHolder.currentDisplay.GetComponent<PauseMenu> () != null) {
+						MenuHolder.hideCurrentMenu ();
+					}
 				}
 			} 
 		}
@@ -44,20 +44,6 @@ public class Pause_Game : MonoBehaviour {
         Time.timeScale = 0;
 		paused = true;
     }
-
-	public void showPauseMessage() {
-		if (pauseMenuInstance == null) {
-			pauseMenuInstance = Instantiate (pauseMenu, center, new Quaternion ());
-			pauseMenuInstance.transform.SetParent (canvas.transform, false);
-			pauseMenuInstance.transform.localScale = new Vector3 (1, 1, 1);
-		}
-	}
-
-	public void hidePauseMessage() {
-		if (pauseMenuInstance != null) {
-			Destroy (pauseMenuInstance.gameObject);
-		}
-	}
 
     public void unPause()
     {

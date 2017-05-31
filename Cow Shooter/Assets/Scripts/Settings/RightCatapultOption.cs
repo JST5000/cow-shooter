@@ -7,7 +7,7 @@ public class RightCatapultOption : MonoBehaviour {
 
 	private bool readyForNew;
 
-	void Awake() {
+	void Start() {
 		displayValue ();
 	}
 

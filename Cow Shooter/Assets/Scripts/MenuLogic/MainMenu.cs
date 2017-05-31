@@ -8,6 +8,10 @@ public class MainMenu : MonoBehaviour {
 		GetComponent<SceneShift> ().shiftScene ("Game Arena");
 	}
 
+	public void showSettings() {
+		MenuHolder.showControlsMenu ();
+	}
+
 	public void exit() {
 		Application.Quit ();
 	}
