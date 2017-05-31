@@ -17,6 +17,7 @@ public class Explosive : MonoBehaviour {
 	void Start () {
         if (GetComponent<Transform>().parent.tag != "ThrowableHolder")
         {
+            
             explosion_delay = max_delay;
             // explosion_radius = gameObject.GetComponent<CircleCollider2D>();
         }
@@ -35,7 +36,7 @@ public class Explosive : MonoBehaviour {
 	}
     private void FixedUpdate()
     {
-        if (GetComponent<Transform>().parent.tag != "ThrowableHolder")
+        if (GetComponent<Transform>().parent.parent.tag != "ThrowableHolder")
         {
             if (exploded)
             {
@@ -45,7 +46,7 @@ public class Explosive : MonoBehaviour {
                 }
                 else
                 {
-                    Object.Destroy(this.gameObject);
+                    Object.Destroy(this.GetComponent<Transform>().parent.gameObject);
                 }
 				if (explosion_radius != null) {
 					explosion_radius.radius = current_radius;
