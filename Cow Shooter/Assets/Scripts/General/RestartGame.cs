@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class RestartGame : MonoBehaviour {
 
-	public Countdown gameTimer;
-	public PvPScore overallScore;
-	public ScoreboardLogic score;
+	private Countdown gameTimer;
 	public SceneShift shift;
 	public Pause_Game pauser;
+
+	void Awake() {
+		gameTimer = GameObject.Find ("GameTimer").GetComponent<Countdown> ();
+	}
 	
 	// Update is called once per frame
 	void Update () {

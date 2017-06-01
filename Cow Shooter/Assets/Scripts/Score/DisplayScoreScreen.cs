@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DisplayScoreScreen : MonoBehaviour {
 
-	public GameObject scoreScreen;
+	private GameObject scoreScreen;
 	public Vector2 center;
 	private GameObject scoreScreenInstance;
 	private Pause_Game pauser;
@@ -14,7 +14,7 @@ public class DisplayScoreScreen : MonoBehaviour {
 	private PvPScore overallCounter;
 	private bool hasBeenDisplayed;
 	private GameObject canvas;
-
+	private string folder = "UI_Prefabs/";
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +25,7 @@ public class DisplayScoreScreen : MonoBehaviour {
 
 	void Awake() {
 		GameObject global_scripts = GameObject.Find ("Global_Scripts");
+		scoreScreen = (GameObject)Resources.Load (folder + "ScoreboardBackdrop");
 		pauser = global_scripts.GetComponent<Pause_Game> ();
 		gameTimer = GameObject.Find ("GameTimer").GetComponent<Countdown>();
 		canvas = GameObject.Find ("Canvas");
@@ -87,8 +88,7 @@ public class DisplayScoreScreen : MonoBehaviour {
 		} else if (red > blue) {
 			overallCounter.redWins++;
 		} else {
-			overallCounter.blueWins++;
-			overallCounter.redWins++;
+			//No one scores in tie game
 		}
 	}
 
