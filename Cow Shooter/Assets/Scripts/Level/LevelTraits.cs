@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LevelTraits : MonoBehaviour {
 
+	public Sprite background;
+	public GameObject target;
+
 	/* Brainstorm for what levels should contain
 	 * Background Image
 	 * Target (Or list of possible targets)

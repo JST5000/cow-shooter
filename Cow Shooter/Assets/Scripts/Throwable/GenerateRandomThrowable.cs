@@ -40,7 +40,7 @@ public class GenerateRandomThrowable : MonoBehaviour {
 		}
 	}
 
-	private GameObject weightedSpawn(List<GameObject> options, Vector3 spawnpoint) {
+	public static GameObject weightedSpawn(List<GameObject> options, Vector3 spawnpoint) {
 		float totalOdds = 0;
 		foreach (GameObject item in options) {
 			totalOdds += item.GetComponent<Randomization> ().current;
@@ -66,7 +66,7 @@ public class GenerateRandomThrowable : MonoBehaviour {
 		return throwable;
 	}
 
-	private GameObject unweightedSpawn(List<GameObject> options, Vector3 spawnpoint) {
+	public static GameObject unweightedSpawn(List<GameObject> options, Vector3 spawnpoint) {
 		int index = Random.Range (0, options.Count);
 		GameObject throwable = Instantiate(options[index], spawnpoint, new Quaternion());
 		return throwable;
