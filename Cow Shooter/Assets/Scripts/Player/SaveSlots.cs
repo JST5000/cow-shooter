@@ -76,4 +76,15 @@ public class SaveSlots : MonoBehaviour {
 		info.fileNames.Add (filePath);
 		saveAccountInfo ();
 	}
+
+	public void removeSaveSlot(int index) {
+		if (index < saves.Count) {
+			PlayerAccount temp = saves [index];
+			temp.deleteSave ();
+			saves.RemoveAt (index);
+			Destroy (temp);
+		} else {
+			print ("No save of index " + index + " in SaveSlots.saves");
+		}
+	}
 }

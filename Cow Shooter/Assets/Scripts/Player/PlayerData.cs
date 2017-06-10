@@ -7,7 +7,7 @@ using System;
 public class PlayerData : MonoBehaviour {
 
 	public string username;
-	public Settings playerSettings;
+	public SettingData playerSettings;
 	public List<GameObject> throwables = new List<GameObject>();
 
 /*

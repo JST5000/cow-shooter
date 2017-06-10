@@ -51,6 +51,10 @@ public class PlayerAccount : MonoBehaviour {
 		file.Close ();
 	}
 
+	public void deleteSave() {
+		File.Delete (path);
+	}
+
 	public static PlayerAccount loadPlayerData(string fileLoc) {
 		if (File.Exists (fileLoc)) {
 			FileStream file = File.Open (fileLoc, FileMode.Open);
