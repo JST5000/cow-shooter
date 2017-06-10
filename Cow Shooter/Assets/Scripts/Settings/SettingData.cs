@@ -7,12 +7,13 @@ using System;
 public class SettingData {
 
 
-	public KeyCode leftInput;
-	public KeyCode rightInput;
-	public KeyCode pauseButton;
-	public int gameTimeMinutes;
-	public int gameTimeSeconds;
-	public bool enableAI;
+	public KeyCode leftInput = KeyCode.A;
+	public KeyCode rightInput = KeyCode.D;
+	public KeyCode pauseButton = KeyCode.P;
+	public int gameTimeMinutes = 1;
+	public int gameTimeSeconds = 0;
+	public bool enableAI = true;
+
 	//public Vector3 magicNumber = new Vector3(10, 42, 9421); 
 
 

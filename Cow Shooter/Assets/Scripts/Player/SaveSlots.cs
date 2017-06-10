@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SaveSlots : MonoBehaviour {
 
 	public List<PlayerAccount> saves;
+	public static PlayerAccount currentSave;
 	private string startOfName = "/save_";
 	private string savesDir = "save_slots";
 	private string savesFolder; 
@@ -18,11 +19,14 @@ public class SaveSlots : MonoBehaviour {
 		savesFolder = Application.persistentDataPath + savesDir;;
 		saveInfoLoc = savesFolder + "names_of_saves.dat";
 
+		PlayerAccount defaultAcc = new PlayerAccount (savesFolder + "default.dat");
+		currentSave = defaultAcc;
+
 		if (!Directory.Exists (savesFolder)) {
 			Directory.CreateDirectory (savesFolder);
 		}
 		if (File.Exists (saveInfoLoc)) {
-			//load
+			loadAccountInfo ();
 		} else {
 			info = new SaveSlotFileNames ();
 			saveAccountInfo ();
@@ -67,7 +71,7 @@ public class SaveSlots : MonoBehaviour {
 
 	public void addSaveSlot() {
 		int num = saves.Count;
-		string filePath = savesFolder + startOfName + num;
+		string filePath = savesFolder + startOfName + num + ".dat";
 
 		PlayerAccount newSave = new PlayerAccount (filePath);
 		newSave.savePlayerData ();
@@ -85,6 +89,14 @@ public class SaveSlots : MonoBehaviour {
 			Destroy (temp);
 		} else {
 			print ("No save of index " + index + " in SaveSlots.saves");
+		}
+	}
+
+	public void setCurrentSaveSlot(int index) {
+		if (index < saves.Count) {
+			currentSave = saves [index];
+		} else {
+			print ("Selected save was outside of the range of current saves with index " + index + ". In SaveSlots.");
 		}
 	}
 }

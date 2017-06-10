@@ -69,6 +69,14 @@ public class PlayerAccount : MonoBehaviour {
 		return null;
 	}
 
+	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, PlayerData information) {
+		if (weighted) {
+			return GenerateRandomThrowable.weightedSpawn (information.throwables, spawnpoint);
+		} else {
+			return GenerateRandomThrowable.unweightedSpawn (information.throwables, spawnpoint);
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		

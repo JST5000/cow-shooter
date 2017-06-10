@@ -10,17 +10,6 @@ public class PlayerData : MonoBehaviour {
 	public SettingData playerSettings;
 	public List<GameObject> throwables = new List<GameObject>();
 
-/*
-
-	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, PlayerData information) {
-		if (weighted) {
-			return GenerateRandomThrowable.weightedSpawn (throwables, spawnpoint);
-		} else {
-			return GenerateRandomThrowable.unweightedSpawn (throwables, spawnpoint);
-		}
-	}
-	*/
-
 	/*
 	 * Players have the following:
 	 * Settings
