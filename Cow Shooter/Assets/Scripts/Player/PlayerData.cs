@@ -1,33 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class PlayerData : MonoBehaviour {
 
+	public string username;
 	public Settings playerSettings;
-	private List<GameObject> throwables;
+	public List<GameObject> throwables = new List<GameObject>();
 
-	void Awake() {
-		throwables = new List<GameObject> ();
-	}
+/*
 
-	public void addThrowable(GameObject newThrowable) {
-		throwables.Add (newThrowable);
-	}
-
-	public void addThrowables(List<GameObject> newThrowables) {
-		foreach (GameObject entry in newThrowables) {
-			addThrowable (entry);
-		}
-	}
-
-	public GameObject spawnRandom(Vector2 spawnpoint, bool weighted) {
+	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, PlayerData information) {
 		if (weighted) {
 			return GenerateRandomThrowable.weightedSpawn (throwables, spawnpoint);
 		} else {
 			return GenerateRandomThrowable.unweightedSpawn (throwables, spawnpoint);
 		}
 	}
+	*/
 
 	/*
 	 * Players have the following:
