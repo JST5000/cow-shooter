@@ -6,20 +6,24 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 
 
-public class PlayerAccount : MonoBehaviour {
+public class PlayerAccount : ScriptableObject {
 
 	public PlayerData accountInfo;
 	private string path;
 
-	public PlayerAccount(string filepath) {
-		path = filepath;
+	public static PlayerAccount createPlayerData(string filepath) {
+		PlayerAccount instance = ScriptableObject.CreateInstance<PlayerAccount>();
+		instance.path = filepath;
+		return instance;
 	}
 
-	public PlayerAccount(PlayerData info, string origPath) {
-		accountInfo = info;
-		path = origPath;
+	public static PlayerAccount createPlayerData(PlayerData info, string filepath) {
+		PlayerAccount instance = ScriptableObject.CreateInstance<PlayerAccount>();
+		instance.path = filepath;
+		instance.accountInfo = info;
+		return instance;
 	}
-
+		
 	// Use this for initialization
 	void Start () {
 		if (accountInfo == null) {
@@ -60,11 +64,9 @@ public class PlayerAccount : MonoBehaviour {
 			FileStream file = File.Open (fileLoc, FileMode.Open);
 			BinaryFormatter bf = new BinaryFormatter ();
 			PlayerData player = (PlayerData)bf.Deserialize (file);
-			PlayerAccount loadedAccount = new PlayerAccount (player, fileLoc);
+			PlayerAccount loadedAccount = PlayerAccount.createPlayerData (player, fileLoc);
 			file.Close ();
 			return loadedAccount;
-		} else {
-			print ("FILE NOT FOUND AT " + fileLoc + "\n Error is in PlayerAccount.loadPlayerData(fileLoc)");
 		}
 		return null;
 	}

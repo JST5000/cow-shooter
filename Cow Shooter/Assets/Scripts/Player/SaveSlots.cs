@@ -19,7 +19,7 @@ public class SaveSlots : MonoBehaviour {
 		savesFolder = Application.persistentDataPath + savesDir;;
 		saveInfoLoc = savesFolder + "names_of_saves.dat";
 
-		PlayerAccount defaultAcc = new PlayerAccount (savesFolder + "default.dat");
+		PlayerAccount defaultAcc = PlayerAccount.createPlayerData (savesFolder + "default.dat");
 		currentSave = defaultAcc;
 
 		if (!Directory.Exists (savesFolder)) {
@@ -73,7 +73,7 @@ public class SaveSlots : MonoBehaviour {
 		int num = saves.Count;
 		string filePath = savesFolder + startOfName + num + ".dat";
 
-		PlayerAccount newSave = new PlayerAccount (filePath);
+		PlayerAccount newSave = PlayerAccount.createPlayerData(filePath);
 		newSave.savePlayerData ();
 
 		saves.Add (newSave);
