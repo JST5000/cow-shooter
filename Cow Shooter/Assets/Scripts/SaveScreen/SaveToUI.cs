@@ -25,6 +25,7 @@ public class SaveToUI : MonoBehaviour {
 	public void onClick() {
 		if (save != null) {
 			ChosenSave.chosen.selectedSave = save;
+
 		} else {
 			print ("Tried to set save, but there was no save attached to this SaveToUI");
 		}
