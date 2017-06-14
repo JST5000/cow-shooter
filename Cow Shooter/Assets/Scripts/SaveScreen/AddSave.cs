@@ -1,25 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AddSave : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-		//open dialogue to make a new save
+	private string username;
 
+	public void submitSave() {
+		if (username != null) {
+			SaveSlots.currentSaveSlots.addSaveSlot (username);
+			GameObject.Find ("SaveSlotHolder").GetComponent<SaveSlotsToUI> ().updateSaveCarousel ();
+			exit ();
+		} else {
+			print ("No username entered.");
+		}
 	}
 
-
-
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public void exit() {
+		Destroy (gameObject);
 	}
 
-	public void OnClick() {
-
+	public void setUsername() {
+		username = GetComponentInChildren<InputField> ().text;
 	}
 }

@@ -9,11 +9,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class PlayerAccount : ScriptableObject {
 
 	public PlayerData accountInfo;
+	public List<GameObject> throwables = new List<GameObject> ();
 	private string path;
 
 	public static PlayerAccount createPlayerData(string filepath) {
 		PlayerAccount instance = ScriptableObject.CreateInstance<PlayerAccount>();
+		initializeDefaults (instance);
 		instance.path = filepath;
+		instance.accountInfo = new PlayerData ();
+		instance.accountInfo.throwableNames = getDefaultThrowableNames();
+		instance.accountInfo.username = "DEFAULT_NAME";
 		return instance;
 	}
 
@@ -21,6 +26,7 @@ public class PlayerAccount : ScriptableObject {
 		PlayerAccount instance = ScriptableObject.CreateInstance<PlayerAccount>();
 		instance.path = filepath;
 		instance.accountInfo = info;
+		instance.throwables = playerDataToGameObjects (info);
 		return instance;
 	}
 		
@@ -28,24 +34,29 @@ public class PlayerAccount : ScriptableObject {
 	void Start () {
 		if (accountInfo == null) {
 			accountInfo = new PlayerData ();
-			foreach (GameObject item in getDefaultThrowables()) {
-				accountInfo.throwables.Add (item); 
-			}
+			initializeDefaults (this);
 		}
 	}
 
-	private List<GameObject> getDefaultThrowables() {
-		string folder = "Throwable_Prefabs/";
-		List<GameObject> defaultDeck = new List<GameObject> ();
-		defaultDeck.Add ((GameObject)Resources.Load (folder + "Tetris_L"));
-		defaultDeck.Add ((GameObject)Resources.Load (folder + "Tetris_Square"));
-		defaultDeck.Add ((GameObject)Resources.Load (folder + "Tetris_T"));
-		defaultDeck.Add ((GameObject)Resources.Load (folder + "Bomb"));
-		return defaultDeck;
+	private static void initializeDefaults(PlayerAccount acc) {
+		PlayerData def = new PlayerData ();
+		def.username = "DEFAULT_NAME";
+		def.throwableNames = getDefaultThrowableNames ();
+		acc.throwables = playerDataToGameObjects (def);
+	}
+
+	private static List<string> getDefaultThrowableNames() {
+		List<string> names = new List<string> ();
+		names.Add ("Tetris_L");
+		names.Add ("Tetris_Square");
+		names.Add ("Tetris_T");
+		names.Add ("Bomb");
+		return names;
 	}
 
 	public void setDeck(List<GameObject> deckList) {
-		accountInfo.throwables = deckList;
+		throwables = deckList;
+		accountInfo.throwableNames = gameObjectsToNames (deckList);
 	}
 
 	public void savePlayerData() {
@@ -71,16 +82,28 @@ public class PlayerAccount : ScriptableObject {
 		return null;
 	}
 
-	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, PlayerData information) {
+	public static List<GameObject> playerDataToGameObjects(PlayerData info) {
+		List<GameObject> deck = new List<GameObject> ();
+		string filepath = "Throwable_Prefabs/";
+		foreach (string name in info.throwableNames) {
+			deck.Add ((GameObject)Resources.Load (filepath + name));
+		}
+		return deck;
+	}
+
+	public static List<string> gameObjectsToNames (List<GameObject> throwables) {
+		List<string> names = new List<string> ();
+		foreach (GameObject item in throwables) {
+			names.Add (item.name);
+		}
+		return names;
+	}
+
+	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, PlayerAccount information) {
 		if (weighted) {
 			return GenerateRandomThrowable.weightedSpawn (information.throwables, spawnpoint);
 		} else {
 			return GenerateRandomThrowable.unweightedSpawn (information.throwables, spawnpoint);
 		}
-	}
-
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

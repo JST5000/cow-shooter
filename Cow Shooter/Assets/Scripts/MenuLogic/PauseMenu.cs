@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public void goToMainMenu() {
 		globalScripts.GetComponent<Pause_Game> ().unPause ();
-		globalScripts.GetComponent<SceneShift> ().shiftScene ("Main Menu");
+		SceneShift.shiftScene ("Main Menu");
 	}
 
 	public void goToSettings() {

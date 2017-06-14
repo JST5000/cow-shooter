@@ -4,15 +4,13 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class PlayerData : MonoBehaviour {
+public class PlayerData {
 
 	public string username;
-	public SettingData playerSettings;
-	public List<GameObject> throwables = new List<GameObject>();
+	public List<string> throwableNames = new List<string>();
 
 	/*
 	 * Players have the following:
-	 * Settings
 	 * Character
 	 * Campaign Progress
 	 * Lists of throwables

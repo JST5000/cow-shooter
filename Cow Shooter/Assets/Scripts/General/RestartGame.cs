@@ -5,7 +5,6 @@ using UnityEngine;
 public class RestartGame : MonoBehaviour {
 
 	private Countdown gameTimer;
-	public SceneShift shift;
 	public Pause_Game pauser;
 
 	void Awake() {
@@ -16,7 +15,7 @@ public class RestartGame : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Space) && gameTimer.timesUp) {
 			pauser.unPause ();
-			shift.shiftScene ("Game Arena");
+			SceneShift.shiftScene ("Game Arena");
 		}
 	}
 }
