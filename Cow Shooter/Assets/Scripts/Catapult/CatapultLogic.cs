@@ -42,10 +42,11 @@ public class CatapultLogic : MonoBehaviour {
 		if (settings == null) {
 			print ("Settings not found, using default controls set locally in catapult logic.");
 		}
-		if (catapultArmLogic.isLeft || (Settings.currentPreferences != null && !Settings.currentPreferences.enableAI)) {
-			deck = SaveSlots.currentSaveSlots.chosenSave;
+		if (catapultArmLogic.isLeft) {
+			deck = SaveSlots.currentSaveSlots.blueTeamSave;
 		} else {
-			//TODO give ai a deck.
+			//TODO give ai a deck non player deck
+			deck = SaveSlots.currentSaveSlots.redTeamSave;
 		}
 	}
 

@@ -9,11 +9,6 @@ public class SelectionLogic : MonoBehaviour {
 	void Awake () {
 		turnSelectionBoxOff ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public void turnSelectionBoxOn() {
 		GetComponent<Image> ().color = new Color (GetComponent<Image> ().color.r, 

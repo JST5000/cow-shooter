@@ -9,6 +9,8 @@ public class SaveSlots : MonoBehaviour {
 
 	public List<PlayerAccount> saves;
 	public PlayerAccount chosenSave;
+	public PlayerAccount redTeamSave;
+	public PlayerAccount blueTeamSave;
 
 	public static SaveSlots currentSaveSlots;
 
@@ -23,6 +25,8 @@ public class SaveSlots : MonoBehaviour {
 		saveInfoLoc = savesFolder +"/" + "names_of_saves.dat";
 
 		haveOneInstance ();
+
+		chosenSave = PlayerAccount.createPlayerData (savesFolder + "/" + "default");
 
 		if (!Directory.Exists (savesFolder)) {
 			Directory.CreateDirectory (savesFolder);
@@ -87,7 +91,7 @@ public class SaveSlots : MonoBehaviour {
 		PlayerAccount newSave;
 		if (username == "Admin") {
 			PlayerData temp = new PlayerData ();
-			AdminDeck.giveDeckTo (temp);
+			DeckLibrary.giveAdminDeckTo (temp);
 			newSave = PlayerAccount.createPlayerData (temp, filePath);
 		} else {
 			newSave = PlayerAccount.createPlayerData (filePath);

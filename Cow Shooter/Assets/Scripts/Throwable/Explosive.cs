@@ -77,8 +77,10 @@ public class Explosive : MonoBehaviour {
                     col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction);
 
                 }
-
-
+				FirstCollision first = col.gameObject.GetComponent<FirstCollision> ();
+				if (first != null) {
+					first.collidedAfterLaunch = true;
+				}
 
             }
         }
