@@ -84,8 +84,14 @@ public class SaveSlots : MonoBehaviour {
 	public void addSaveSlot(string username) {
 		int num = saves.Count;
 		string filePath = savesFolder + startOfName + username + ".dat";
-
-		PlayerAccount newSave = PlayerAccount.createPlayerData(filePath);
+		PlayerAccount newSave;
+		if (username == "Admin") {
+			PlayerData temp = new PlayerData ();
+			AdminDeck.giveDeckTo (temp);
+			newSave = PlayerAccount.createPlayerData (temp, filePath);
+		} else {
+			newSave = PlayerAccount.createPlayerData (filePath);
+		}
 		newSave.accountInfo.username = username;
 		newSave.savePlayerData ();
 

@@ -10,6 +10,7 @@ public class PlayerAccount : ScriptableObject {
 
 	public PlayerData accountInfo;
 	public List<GameObject> throwables = new List<GameObject> ();
+	public List<RandomValues> weightedValues = new List<RandomValues> ();
 	private string path;
 
 	public static PlayerAccount createPlayerData(string filepath) {
@@ -47,8 +48,8 @@ public class PlayerAccount : ScriptableObject {
 
 	private static List<string> getDefaultThrowableNames() {
 		List<string> names = new List<string> ();
-		names.Add ("Tetris_L");
-		names.Add ("Tetris_Square");
+		names.Add ("Long-Blue");
+		names.Add ("Square-Blue");
 		names.Add ("Tetris_T");
 		names.Add ("Bomb");
 		return names;
@@ -101,9 +102,46 @@ public class PlayerAccount : ScriptableObject {
 
 	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, PlayerAccount information) {
 		if (weighted) {
-			return GenerateRandomThrowable.weightedSpawn (information.throwables, spawnpoint);
+			if (information.weightedValues.Count < information.throwables.Count) {
+				initializeRandomValues (information);
+			}
+			return weightedSpawn (information, spawnpoint);
 		} else {
 			return GenerateRandomThrowable.unweightedSpawn (information.throwables, spawnpoint);
 		}
+	}
+
+	public static void initializeRandomValues (PlayerAccount information) {
+		information.weightedValues = new List<RandomValues> ();
+		foreach (GameObject throwable in information.throwables) {
+			information.weightedValues.Add (new RandomValues (throwable.GetComponent<Randomization> ().baseline));
+		}
+	}
+
+	private static GameObject weightedSpawn(PlayerAccount information, Vector2 spawnpoint) {
+		float totalOdds = 0;
+		foreach (RandomValues vals in information.weightedValues) {
+			totalOdds += vals.currentOdds;
+		}
+		float rand = UnityEngine.Random.Range (0, totalOdds);
+		int index = 0;
+		bool found = false;
+		int max = information.weightedValues.Count;
+		for (int i = 0; i < max; i++) {
+			if (found) {
+				information.weightedValues [i].wasNotPicked ();
+			} else {
+				index = i;
+				rand -= information.weightedValues [i].currentOdds;
+				if (rand < 0) {
+					information.weightedValues [i].wasPicked ();
+					found = true;
+				} else {
+					information.weightedValues [i].wasNotPicked ();
+				}
+			}
+		}
+		GameObject throwable = Instantiate(information.throwables[index], spawnpoint, new Quaternion());
+		return throwable;
 	}
 }

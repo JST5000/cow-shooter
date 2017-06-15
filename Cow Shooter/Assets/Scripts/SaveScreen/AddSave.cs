@@ -10,7 +10,7 @@ public class AddSave : MonoBehaviour {
 	public void submitSave() {
 		if (username != null) {
 			SaveSlots.currentSaveSlots.addSaveSlot (username);
-			GameObject.Find ("SaveSlotHolder").GetComponent<SaveSlotsToUI> ().updateSaveCarousel ();
+			GameObject.Find ("SaveSlotsToUIHolder").GetComponent<SaveSlotsToUI> ().updateSaveCarousel ();
 			exit ();
 		} else {
 			print ("No username entered.");

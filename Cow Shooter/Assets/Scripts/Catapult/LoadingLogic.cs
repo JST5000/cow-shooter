@@ -47,7 +47,6 @@ public class LoadingLogic : MonoBehaviour {
 				catapult.loadCatapult ();
 				tryToLoad = false;
 			}
-
 		}
 	}
 }

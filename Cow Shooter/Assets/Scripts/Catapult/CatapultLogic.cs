@@ -28,6 +28,8 @@ public class CatapultLogic : MonoBehaviour {
     public float maxPower;
     public GameObject throwableInstanceHolder;
 
+	public PlayerAccount deck;
+
 
     // Use this for initialization
     void Start () {
@@ -39,6 +41,11 @@ public class CatapultLogic : MonoBehaviour {
 		GameObject settings = GameObject.Find ("SettingsHolder");
 		if (settings == null) {
 			print ("Settings not found, using default controls set locally in catapult logic.");
+		}
+		if (catapultArmLogic.isLeft || (Settings.currentPreferences != null && !Settings.currentPreferences.enableAI)) {
+			deck = SaveSlots.currentSaveSlots.chosenSave;
+		} else {
+			//TODO give ai a deck.
 		}
 	}
 
@@ -57,9 +64,7 @@ public class CatapultLogic : MonoBehaviour {
 			}
 		}
 	}
-
-
-
+		
 	private bool getInputUp() {
 		if (Settings.currentPreferences != null) {
 			if (catapultArmLogic.isLeft) {
@@ -182,7 +187,7 @@ public class CatapultLogic : MonoBehaviour {
 
 	private GameObject instantiateRandomThrowable()
     {
-		GameObject throwable = throwablePrefabs.GetComponent<GenerateRandomThrowable> ().spawnRandomizedThrowable (spawnpoint, true);
+		GameObject throwable = PlayerAccount.spawnRandom (spawnpoint, true, deck);
         addTeam(throwable);
         throwable.transform.parent = throwableInstanceHolder.transform;
         Vector3 prev = throwable.transform.rotation.eulerAngles;

@@ -18,7 +18,6 @@ public class SaveSlotsToUI : MonoBehaviour {
 	}
 
 	public void updateSaveCarousel() {
-		int test = SaveSlots.currentSaveSlots.saves.Count;
 		int start = Mathf.Min (SaveSlots.currentSaveSlots.saves.Count, onScreenCap - saveCarousel.Count) - 1;
 		for (int i = start; i >= 0; i--) {
 			PlayerAccount save = SaveSlots.currentSaveSlots.saves [i];
@@ -27,6 +26,9 @@ public class SaveSlotsToUI : MonoBehaviour {
 			saveCarousel.Add (display);
 		}
 		cullExtra ();
+		if (indexOfCenter > SaveSlots.currentSaveSlots.saves.Count) {
+			indexOfCenter = SaveSlots.currentSaveSlots.saves.Count - 1;
+		}
 		assignSaveIdentities ();
 		setCarouselLocations();
 	}

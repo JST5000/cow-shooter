@@ -8,7 +8,7 @@ public class SaveCarouselMenu : MonoBehaviour {
 	private string instanceName = "";
 
 	void Awake() {
-		saveUI = GameObject.Find ("SaveSlotHolder").GetComponent<SaveSlotsToUI> ();
+		saveUI = GameObject.Find ("SaveSlotsToUIHolder").GetComponent<SaveSlotsToUI> ();
 	}
 
 	public void openAddSaveMenu() {
