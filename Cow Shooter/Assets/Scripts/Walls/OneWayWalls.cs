@@ -9,26 +9,7 @@ public class OneWayWalls : MonoBehaviour {
 	void Start() {
 		ignoreList = new List<Collider2D> ();
 	}
-
-	void Update() {
-		/*int count = ignoreList.Count;
-		for (int i = 0; i < count; i++) {
-			Collider2D item = ignoreList [i];
-			if (item != null) {
-				if (item.GetComponent<FirstCollision> ().collidedAfterLaunch) {
-					reinstateCollisionWith (item);
-					toDelete.Add (item);
-				}
-			} else {
-				toDelete.Add (item);
-			}
-		}
-		foreach (Collider2D item in toDelete) {
-			ignoreList.Remove (item);
-		}
-		toDelete.Clear (); */
-	} 
-
+		
 	void OnCollision2DEnter(Collision2D col) {
 		if (col.gameObject.tag == "Throwable" && !col.gameObject.GetComponent<FirstCollision> ().collidedAfterLaunch) {
 			col.collider.isTrigger = true;

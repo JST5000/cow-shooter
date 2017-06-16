@@ -21,9 +21,5 @@ public class Team : MonoBehaviour {
             spriteRenderer.color = new Color(spriteRenderer.color.r + .8f, .15f, .15f);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

@@ -26,14 +26,15 @@ public class InsideChecker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        score = 0;
-        foreach (Vector2 point in comparePoints) {
-            if (coll.OverlapPoint(point))
-            {
-                score++;
-            }
-        }
+		//Only updates score if score could have changed by it moving.
+		if (gameObject.GetComponent<Rigidbody2D> ().velocity.x != 0 || gameObject.GetComponent<Rigidbody2D> ().velocity.y != 0) {
+			score = 0;
+			foreach (Vector2 point in comparePoints) {
+				if (coll.OverlapPoint (point)) {
+					score++;
+				}
+			}
+		}
         
     }
    
