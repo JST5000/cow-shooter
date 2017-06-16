@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour {
 	public void goToSettings() {
 		MenuHolder.showControlsMenu ();
 	}
-
+		
 	public void exit() {
 		Application.Quit ();
 	}

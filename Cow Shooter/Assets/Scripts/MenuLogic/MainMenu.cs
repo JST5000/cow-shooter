@@ -18,6 +18,12 @@ public class MainMenu : MonoBehaviour {
 		MenuHolder.showControlsMenu ();
 	}
 
+	public void openInstructions() {
+		GameObject instance = Instantiate ((GameObject)Resources.Load (Application.persistentDataPath +
+			"UI_Prefabs/" + "Instructions"), GameObject.Find ("Canvas").transform);
+		instance.transform.localPosition = new Vector2 ();
+	}
+
 	public void exit() {
 		Application.Quit ();
 	}
