@@ -18,6 +18,7 @@ public class LetGoAtApex : MonoBehaviour {
         Launch logic = GetComponent<Launch>();
         if (topTrigger.IsTouching(armCollider))
         {
+			GetComponentInChildren<Tether> ().releaseTether ();
             GetComponent<Launch>().dropDown();
         }
         if(bottomTrigger.IsTouching(armCollider) && logic.isAtMax)
