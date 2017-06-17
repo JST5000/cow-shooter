@@ -19,8 +19,7 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void openInstructions() {
-		GameObject instance = Instantiate ((GameObject)Resources.Load (Application.persistentDataPath +
-			"UI_Prefabs/" + "Instructions"), GameObject.Find ("Canvas").transform);
+		GameObject instance = Instantiate ((GameObject)Resources.Load ("UI_Prefabs/" + "Instructions"), GameObject.Find ("Canvas").transform);
 		instance.transform.localPosition = new Vector2 ();
 	}
 

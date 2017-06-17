@@ -26,6 +26,7 @@ public class Account : ScriptableObject {
 		def.username = "DEFAULT_NAME";
 		def.throwableNames = getDefaultThrowableNames ();
 		acc.throwables = playerDataToGameObjects (def);
+		acc.accountInfo = def;
 	}
 
 	private static List<string> getDefaultThrowableNames() {

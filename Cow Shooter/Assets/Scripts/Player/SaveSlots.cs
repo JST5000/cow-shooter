@@ -109,7 +109,6 @@ public class SaveSlots : MonoBehaviour {
 			PlayerAccount temp = saves [index];
 			temp.deleteSave ();
 			saves.RemoveAt (index);
-			print (info.fileNames [index]);
 			info.fileNames.RemoveAt (index);
 			saveAccountInfo ();
 			Destroy (temp);
@@ -121,7 +120,6 @@ public class SaveSlots : MonoBehaviour {
 	public void removeChosen() {
 		if (chosenSave != null) {
 			int index = saves.IndexOf (chosenSave);
-			print (index);
 			removeSaveSlot (index);
 		}
 	}
