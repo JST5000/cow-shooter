@@ -8,7 +8,7 @@ public class PlayerData {
 
 	public string username;
 	public List<string> throwableNames = new List<string>();
-
+	public CampaignHistory scores;
 	/*
 	 * Players have the following:
 	 * Character

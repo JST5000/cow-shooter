@@ -7,13 +7,16 @@ public class LevelLibrary : MonoBehaviour {
 	public static List<Level> allLevels = new List<Level>();
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		loadLevels ();
 	}
 	
 	private void loadLevels() {
 		loadPirate ();
 		loadKid ();
+		for (int i = 0; i < 13; i++) {
+			loadFiller (i); //This is to make the UI testable before we complete all levels
+		}
 	}
 
 	private void loadPirate() {
@@ -37,6 +40,21 @@ public class LevelLibrary : MonoBehaviour {
 		data.throwableNames.Add ("BouncyHouse");
 		data.throwableNames.Add ("Teddy");
 		data.throwableNames.Add ("Present");
+
+		Account enemy = Account.createAccount (data);
+
+		float[] thresholds = { 0f, 20f, 40f };
+
+		Level newLevel = Level.createLevel (name, enemy, thresholds);
+		allLevels.Add (newLevel);
+	}
+
+	private void loadFiller(int index) {
+		string name = "FILLER LEVEL " + index;
+		PlayerData data = new PlayerData ();
+		data.throwableNames.Add ("Tetris_T");
+		data.throwableNames.Add ("Long-Blue");
+		data.throwableNames.Add ("Square-Blue");
 
 		Account enemy = Account.createAccount (data);
 

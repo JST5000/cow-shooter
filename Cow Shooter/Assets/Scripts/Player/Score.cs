@@ -4,8 +4,9 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class CampaignHistory {
+public class Score  {
 
-	public List<Score> highScores = new List<Score>();
+	public string levelName;
+	public float score;
 
 }
