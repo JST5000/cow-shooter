@@ -13,12 +13,8 @@ public class GenerateRandomThrowable : MonoBehaviour {
 		return Instantiate(options[index], spawnpoint, new Quaternion());
 	}
 
-	public GameObject presentSpawn(Vector3 spawnpoint, Quaternion rot, bool weightedRandom) {
-		List<GameObject> options = new List<GameObject>();
-		for (int i = 0; i < gameObject.transform.childCount; i++)
-		{
-			options.Add(gameObject.transform.GetChild(i).gameObject);
-		}
+	public static GameObject presentSpawn(Vector3 spawnpoint, Quaternion rot, bool weightedRandom, Account deck) {
+		List<GameObject> options = deck.throwables;
 		int index = Random.Range (0, options.Count);
 		while (!Equals (options [index].GetComponent<PresentBehavior> (), null)) {
 			index = Random.Range (0, options.Count);

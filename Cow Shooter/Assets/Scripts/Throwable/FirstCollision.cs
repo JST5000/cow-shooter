@@ -38,6 +38,10 @@ public class FirstCollision : MonoBehaviour {
 		countdown = true;
 	}
 
+	public void hasBeenLaunched() {
+		launched = true;
+	}
+
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (isFirstCollision()) {

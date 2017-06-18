@@ -65,6 +65,10 @@ public class Account : ScriptableObject {
 		}
 	}
 
+	public static GameObject presentSpawnRandom(Vector2 spawnpoint, Quaternion rot, bool weighted, Account information) {
+		return GenerateRandomThrowable.presentSpawn (spawnpoint, rot, weighted, information);
+	}
+
 	private static GameObject weightedSpawn(Account information, Vector2 spawnpoint) {
 		float totalOdds = 0;
 		foreach (RandomValues vals in information.weightedValues) {

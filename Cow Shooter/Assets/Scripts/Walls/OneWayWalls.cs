@@ -13,6 +13,7 @@ public class OneWayWalls : MonoBehaviour {
 	void OnCollision2DEnter(Collision2D col) {
 		if (col.gameObject.tag == "Throwable" && !col.gameObject.GetComponent<FirstCollision> ().collidedAfterLaunch) {
 			col.collider.isTrigger = true;
+			col.collider.gameObject.GetComponent<FirstCollision> ().startLaunchedTimer ();
 		}
 	}
 

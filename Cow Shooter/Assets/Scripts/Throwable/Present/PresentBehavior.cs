@@ -21,9 +21,9 @@ public class PresentBehavior : MonoBehaviour {
 		
 		GameObject newThrowable = null;
 		if (GetComponent<Team> ().team == 0) {
-			newThrowable = PlayerAccount.spawnRandom (new Vector2 (), false, SaveSlots.currentSaveSlots.blueTeamSave);
+			newThrowable = Account.presentSpawnRandom (new Vector2 (), new Quaternion (), false, SaveSlots.currentSaveSlots.blueTeamSave);
 		} else if (GetComponent<Team> ().team == 1) {
-			newThrowable = PlayerAccount.spawnRandom (new Vector2 (), false, SaveSlots.currentSaveSlots.redTeamSave);
+			newThrowable = Account.presentSpawnRandom (new Vector2 (), new Quaternion (), false, SaveSlots.currentSaveSlots.redTeamSave);
 		} 
 		newThrowable.transform.position = gameObject.transform.position;
 		newThrowable.transform.rotation = gameObject.transform.rotation;
@@ -31,7 +31,8 @@ public class PresentBehavior : MonoBehaviour {
 		newThrowable.GetComponent<Rigidbody2D> ().velocity = gameObject.GetComponent<Rigidbody2D> ().velocity;
 		newThrowable.GetComponent<Rigidbody2D> ().angularVelocity = gameObject.GetComponent<Rigidbody2D> ().angularVelocity;
 		newThrowable.GetComponent<Team> ().team = gameObject.GetComponent<Team> ().team;
-		newThrowable.GetComponent<FirstCollision> ().startLaunchedTimer ();
+		newThrowable.GetComponent<FirstCollision> ().collidedAfterLaunch = true;
+		newThrowable.GetComponent<FirstCollision> ().onFirstCollision();
 		Destroy (gameObject);
 
 	}
