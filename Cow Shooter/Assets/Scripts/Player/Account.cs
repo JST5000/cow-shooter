@@ -12,19 +12,22 @@ public class Account : ScriptableObject {
 		PlayerData info = new PlayerData ();
 		info.throwableNames = getDefaultThrowableNames ();
 		info.username = "DEFAULT_NAME";
+		info.scores = new CampaignHistory ();
 		return createAccount (info);
 	}
 
 	public static Account createAccount(PlayerData info) {
 		Account instance = ScriptableObject.CreateInstance<Account> ();
 		instance.accountInfo = info;
+		instance.throwables = playerDataToGameObjects (info);
 		return instance;
 	}
 
-	protected static void initializeDefaults(PlayerAccount acc) {
+	protected static void initializeDefaults(Account acc) {
 		PlayerData def = new PlayerData ();
 		def.username = "DEFAULT_NAME";
 		def.throwableNames = getDefaultThrowableNames ();
+		def.scores = new CampaignHistory ();
 		acc.throwables = playerDataToGameObjects (def);
 		acc.accountInfo = def;
 	}
@@ -43,7 +46,7 @@ public class Account : ScriptableObject {
 		accountInfo.throwableNames = gameObjectsToNames (deckList);
 	}
 
-	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, PlayerAccount information) {
+	public static GameObject spawnRandom(Vector2 spawnpoint, bool weighted, Account information) {
 		if (weighted) {
 			if (information.weightedValues.Count < information.throwables.Count) {
 				initializeRandomValues (information);
@@ -54,14 +57,15 @@ public class Account : ScriptableObject {
 		}
 	}
 
-	private static void initializeRandomValues (PlayerAccount information) {
+	private static void initializeRandomValues (Account information) {
 		information.weightedValues = new List<RandomValues> ();
 		foreach (GameObject throwable in information.throwables) {
+			float test = throwable.GetComponent<Randomization>().baseline;
 			information.weightedValues.Add (new RandomValues (throwable.GetComponent<Randomization> ().baseline));
 		}
 	}
 
-	private static GameObject weightedSpawn(PlayerAccount information, Vector2 spawnpoint) {
+	private static GameObject weightedSpawn(Account information, Vector2 spawnpoint) {
 		float totalOdds = 0;
 		foreach (RandomValues vals in information.weightedValues) {
 			totalOdds += vals.currentOdds;

@@ -11,7 +11,6 @@ public class LevelLayout : MonoBehaviour {
 
 	void Start() {
 		instantiateLevelUI ();
-		print ("JI");
 	}
 
 	private void instantiateLevelUI() {

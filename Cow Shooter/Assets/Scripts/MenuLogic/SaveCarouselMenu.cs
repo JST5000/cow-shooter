@@ -46,7 +46,11 @@ public class SaveCarouselMenu : MonoBehaviour {
 		if (SaveSlots.currentSaveSlots.chosenSave != null) {
 			SaveSlots.currentSaveSlots.blueTeamSave = SaveSlots.currentSaveSlots.chosenSave;
 			SaveSlots.currentSaveSlots.redTeamSave = SaveSlots.currentSaveSlots.chosenSave;
-			SceneShift.shiftScene ("Game Arena");
+			if (Settings.currentPreferences.enableAI) {
+				SceneShift.shiftScene ("Level Select");
+			} else {
+				SceneShift.shiftScene ("Game Arena");
+			}
 		}
 	}
 

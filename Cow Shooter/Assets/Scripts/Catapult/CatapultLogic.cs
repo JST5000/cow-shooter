@@ -28,7 +28,7 @@ public class CatapultLogic : MonoBehaviour {
     public float maxPower;
     public GameObject throwableInstanceHolder;
 
-	public PlayerAccount deck;
+	public Account deck;
 
 
     // Use this for initialization
@@ -45,8 +45,11 @@ public class CatapultLogic : MonoBehaviour {
 		if (catapultArmLogic.isLeft) {
 			deck = SaveSlots.currentSaveSlots.blueTeamSave;
 		} else {
-			//TODO give ai a deck non player deck
-			deck = SaveSlots.currentSaveSlots.redTeamSave;
+			if (LevelLoader.chosenLevel != null) {
+				deck = LevelLoader.chosenLevel.enemy;
+			} else {
+				deck = SaveSlots.currentSaveSlots.redTeamSave;
+			}
 		}
 	}
 
