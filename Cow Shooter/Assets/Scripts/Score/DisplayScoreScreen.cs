@@ -38,7 +38,19 @@ public class DisplayScoreScreen : MonoBehaviour {
 			displayScore ();
 			displayWinner ();
 			updatePvPCounter ();
+			if (LevelLoader.chosenLevel != null && SaveSlots.currentSaveSlots.chosenSave != null) {
+				updateSaveScore ();
+			}
 		}
+	}
+
+	private void updateSaveScore() {
+		Score result = new Score ();
+		result.levelName = LevelLoader.chosenLevel.levelName;
+		scoreScreen.GetComponentInChildren<ScoreboardLogic> ().updateScore ();
+		result.score = getBlueScore ();
+		SaveSlots.currentSaveSlots.chosenSave.accountInfo.scores.updateScore (result);
+		SaveSlots.currentSaveSlots.chosenSave.savePlayerData ();
 	}
 
 	public void displayScore() {
@@ -56,10 +68,8 @@ public class DisplayScoreScreen : MonoBehaviour {
 
 	private void displayWinner() {
 		scoreScreen.GetComponentInChildren<ScoreboardLogic> ().updateScore ();
-		float blue = (int)(((double)scoreScreen.GetComponentInChildren<ScoreboardLogic> ().blueFinalScore / 
-			scoreScreen.GetComponentInChildren<ScoreboardLogic> ().boardSize) * 100);
-		float red = (int)(((double)scoreScreen.GetComponentInChildren<ScoreboardLogic> ().redFinalScore / 
-			scoreScreen.GetComponentInChildren<ScoreboardLogic> ().boardSize) * 100);
+		float blue = (int)getBlueScore ();
+		float red = (int)getRedScore ();
 		if (blue > red) {
 			winner.text = "Blue Wins!";
 		} else if (red > blue) {
@@ -67,6 +77,16 @@ public class DisplayScoreScreen : MonoBehaviour {
 		} else {
 			winner.text = "Tie Game!";
 		}
+	}
+
+	private float getBlueScore() {
+		return (float)(((double)scoreScreen.GetComponentInChildren<ScoreboardLogic> ().blueFinalScore / 
+			scoreScreen.GetComponentInChildren<ScoreboardLogic> ().boardSize) * 100);
+	}
+
+	private float getRedScore() {
+		return (float)(((double)scoreScreen.GetComponentInChildren<ScoreboardLogic> ().redFinalScore / 
+			scoreScreen.GetComponentInChildren<ScoreboardLogic> ().boardSize) * 100);
 	}
 
 	public void removeScore() {

@@ -19,7 +19,7 @@ public class LevelToUI : MonoBehaviour {
 		} else {
 			bool found = false;
 			foreach (Score scr in SaveSlots.currentSaveSlots.chosenSave.accountInfo.scores.highScores) {
-				if (scr.levelName == lvl.name) {
+				if (scr.levelName == lvl.levelName) {
 					int stars = 0;
 					foreach (float goal in lvl.starThresholds) {
 						if (scr.score > goal) {

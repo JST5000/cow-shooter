@@ -21,8 +21,6 @@ public class Tether : MonoBehaviour {
 		if (isAttached) {
 			Destroy (gameObject.GetComponent<FixedJoint2D> ());
 			isAttached = false;
-		} else {
-			print ("Tried to disattach from something when was not attached");
 		}
 	}
 }

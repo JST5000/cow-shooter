@@ -4,20 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreboardLogic : MonoBehaviour {
-    GameObject holder;
+    private GameObject holder;
     public float updateDelay;
     private float updateCount;
     public int blueFinalScore;
     public int redFinalScore;
     public int boardSize;
     // Use this for initialization
-    void Awake () {
-        GameObject tempObject = GameObject.Find("Targets");
-        PointCalculator calculator = tempObject.GetComponent<PointCalculator>();
-        boardSize = calculator.size;
-        blueFinalScore = 0;
-        redFinalScore = 0;
-        holder = GameObject.Find("ThrowableInstanceHolder");
+    void Start () {
+		initialize ();
     }
 	
 	// Update is called once per frame
@@ -41,8 +36,7 @@ public class ScoreboardLogic : MonoBehaviour {
 
     public void updateScore()
     {
-        blueFinalScore = 0;
-        redFinalScore = 0;
+		initialize ();
         InsideChecker[] pointTotals = holder.GetComponentsInChildren<InsideChecker>();
         foreach(InsideChecker checker in pointTotals)
         {

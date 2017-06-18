@@ -12,6 +12,7 @@ public class LevelLibrary : MonoBehaviour {
 	}
 	
 	private void loadLevels() {
+		allLevels.Clear ();
 		loadPirate ();
 		loadKid ();
 		for (int i = 0; i < 13; i++) {
