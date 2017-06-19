@@ -6,16 +6,27 @@ public class PlayerControls : Controls {
 
 	public bool isLeft;
 
-	//TODO
 	public override bool inputDown() {
-		return false;
+		if (isLeft) {
+			return Input.GetKeyDown (Settings.currentPreferences.leftInput);
+		} else {
+			return Input.GetKeyDown (Settings.currentPreferences.rightInput);
+		}
 	}
 
 	public override bool inputContinuous() {
-		return false;
+		if (isLeft) {
+			return Input.GetKey (Settings.currentPreferences.leftInput);
+		} else {
+			return Input.GetKey (Settings.currentPreferences.rightInput);
+		}
 	}
 
 	public override bool inputUp() {
-		return false;
+		if (isLeft) {
+			return Input.GetKeyUp (Settings.currentPreferences.leftInput);
+		} else {
+			return Input.GetKeyUp (Settings.currentPreferences.rightInput);
+		}
 	}
 }

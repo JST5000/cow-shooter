@@ -60,7 +60,6 @@ public class Account : ScriptableObject {
 	private static void initializeRandomValues (Account information) {
 		information.weightedValues = new List<RandomValues> ();
 		foreach (GameObject throwable in information.throwables) {
-			float test = throwable.GetComponent<Randomization>().baseline;
 			information.weightedValues.Add (new RandomValues (throwable.GetComponent<Randomization> ().baseline));
 		}
 	}

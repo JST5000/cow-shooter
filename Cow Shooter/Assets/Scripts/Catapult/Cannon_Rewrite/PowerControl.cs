@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerControl : MonoBehaviour {
+public class PowerControl {
 
-	public float minSpd;
-	public float maxSpd;
+	public float min;
+	public float max;
 
-	private float currSpd;
+	private float curr;
 	private bool increasing;
 	private int milliUntilMaxPower;
 
@@ -19,11 +19,15 @@ public class PowerControl : MonoBehaviour {
 
 	public void resetPower() {
 		increasing = true;
-		currSpd = minSpd;
+		curr = min;
 	}
 
-	public float getCurrentSpeed() {
-		return currSpd;
+	public float getCurrent() {
+		return curr;
+	}
+
+	public float getCurrentPercent() {
+		return (curr - min) / (max - min) * 100;
 	}
 
 	public void changePower() {
@@ -35,31 +39,26 @@ public class PowerControl : MonoBehaviour {
 	}
 
 	private void increasePower() {
-		float deltaSpd = Time.deltaTime * 1000 / milliUntilMaxPower * (maxSpd - minSpd);
-		if(currSpd + deltaSpd > maxSpd)
+		float delta = Time.deltaTime * 1000 / milliUntilMaxPower * (max - min);
+		if(curr + delta > max)
 		{
-			currSpd = maxSpd;
+			curr = max;
 			increasing = false;
 		} else
 		{
-			currSpd = currSpd + deltaSpd;
+			curr = curr + delta;
 		}
 	}
 
 	private void decreasePower() {
-		float deltaPower = Time.deltaTime * 1000 / milliUntilMaxPower * (maxSpd - minSpd);
-		if(currSpd - deltaPower < minSpd)
+		float deltaPower = Time.deltaTime * 1000 / milliUntilMaxPower * (max - min);
+		if(curr - deltaPower < min)
 		{
-			currSpd = minSpd;
+			curr = min;
 			increasing = true;
 		} else
 		{
-			currSpd = currSpd - deltaPower;
+			curr = curr - deltaPower;
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

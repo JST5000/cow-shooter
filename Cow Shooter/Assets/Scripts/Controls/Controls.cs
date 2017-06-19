@@ -15,4 +15,8 @@ public class Controls {
 	public virtual bool inputUp() {
 		return false;
 	}
+
+	public virtual void informControls(float velPercent, float rotPercent) {
+		//Stub
+	}
 }
