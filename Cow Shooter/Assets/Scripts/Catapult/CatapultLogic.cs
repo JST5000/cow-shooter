@@ -37,7 +37,7 @@ public class CatapultLogic : MonoBehaviour {
         loaded = false;
         power = minPower;
         milliUntilMaxPower = 750;
-		powerIncreasing = true;
+		powerIncreasing = false;
 		GameObject settings = GameObject.Find ("SettingsHolder");
 		if (settings == null) {
 			print ("Settings not found, using default controls set locally in catapult logic.");
