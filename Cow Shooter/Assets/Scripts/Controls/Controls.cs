@@ -16,7 +16,7 @@ public class Controls {
 		return false;
 	}
 
-	public virtual void informControls(float velPercent, float rotPercent) {
+	public virtual void informAI(float velPercent, float rotPercent) {
 		//Stub
 	}
 }

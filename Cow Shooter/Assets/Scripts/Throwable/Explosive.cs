@@ -36,26 +36,23 @@ public class Explosive : MonoBehaviour {
 	}
     private void FixedUpdate()
     {
-        if (GetComponent<Transform>().parent.parent.tag != "ThrowableHolder")
+        if (exploded)
         {
-            if (exploded)
+            if (current_radius < explosion_max_size)
             {
-                if (current_radius < explosion_max_size)
-                {
-                    current_radius += explosion_rate;
-                }
-                else
-                {
-                    Object.Destroy(this.GetComponent<Transform>().parent.gameObject);
-                }
-				if (explosion_radius != null) {
-					explosion_radius.radius = current_radius;
-				}
-
-
-
-
+                current_radius += explosion_rate;
             }
+            else
+            {
+                Object.Destroy(this.GetComponent<Transform>().parent.gameObject);
+            }
+			if (explosion_radius != null) {
+				explosion_radius.radius = current_radius;
+			}
+
+
+
+
         }
     }
     private void OnTriggerEnter2D(Collider2D col)

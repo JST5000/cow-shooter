@@ -35,7 +35,7 @@ public class AIControls : Controls {
 		return output;
 	}
 
-	public override void informControls (float velPercent, float rotPercent)
+	public override void informAI (float velPercent, float rotPercent)
 	{
 		if (goalVel < 0) {
 			goalVel = getRandomPercent (minVelPercent, maxVelPercent);

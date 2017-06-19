@@ -7,9 +7,11 @@ public class PowerControl {
 	public float min;
 	public float max;
 
+	public int milliUntilMaxPower;
+	public bool originalIncreasing;
+
 	private float curr;
 	private bool increasing;
-	private int milliUntilMaxPower;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +20,7 @@ public class PowerControl {
 	}
 
 	public void resetPower() {
-		increasing = true;
+		increasing = originalIncreasing;
 		curr = min;
 	}
 

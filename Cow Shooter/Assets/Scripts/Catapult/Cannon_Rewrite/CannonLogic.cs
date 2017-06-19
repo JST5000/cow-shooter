@@ -17,25 +17,50 @@ public class CannonLogic : MonoBehaviour {
 
 	private GameObject throwableInstanceHolder;
 	private GameObject loadedThrowable;
+	private bool loaded;
+
+	private int numberOfFired;
 
 	void Start () {
 		instantiateVelControl ();
 		instantiateRotControl ();
-		assignTeam ();
+		getDeck ();
 		getControls();
+		assignTeam ();
 		getThrowableInstanceHolder ();
+		loaded = true;
 	}
 
 	private void instantiateVelControl() {
 		velControl = new PowerControl ();
-		velControl.max = 60;
-		velControl.min = 20;
+		velControl.max = 12;
+		velControl.min = 6;
+		velControl.milliUntilMaxPower = 750;
+		velControl.originalIncreasing = true;
 	}
 
 	private void instantiateRotControl() {
 		rotControl = new PowerControl ();
 		rotControl.max = 80;
-		rotControl.min = 20;
+		rotControl.min = 0;
+		rotControl.milliUntilMaxPower = 2000;
+		rotControl.originalIncreasing = isLeft;
+	}
+
+	private void getDeck() {
+		if (Settings.currentPreferences.enableAI) {
+			if (LevelLoader.chosenLevel != null) {
+				deck = LevelLoader.chosenLevel.enemy;
+			} else {
+				print ("Could not retrieve enemy deck");
+			}
+		} else {
+			if (isLeft) {
+				deck = SaveSlots.currentSaveSlots.blueTeamSave;
+			} else {
+				deck = SaveSlots.currentSaveSlots.redTeamSave;
+			}
+		}
 	}
 
 	private void assignTeam() {
@@ -62,25 +87,29 @@ public class CannonLogic : MonoBehaviour {
 		throwableInstanceHolder = GameObject.Find ("ThrowableInstanceHolder");
 	}
 
-	void FixedUpdate () {
-		if (loadedThrowable != null) { 
+	void Update () {
+		if (loaded) { 
 			if (inputs.inputUp ()) {
 				fire ();
+				resetCannon ();
+				numberOfFired++;
+				print ("fired" + numberOfFired);
 			}
 
 			if (inputs.inputContinuous ()) {
 				velControl.changePower ();
 			} else {
 				rotControl.changePower ();
+				gameObject.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, rotControl.getCurrent ()));
 			}
-			inputs.informControls (velControl.getCurrentPercent (), rotControl.getCurrentPercent());
-		}
+			inputs.informAI (velControl.getCurrentPercent (), rotControl.getCurrentPercent());
+		} 
 
 	}
 
 	private void fire() {
-		float theta = rotControl.getCurrent ();
-		Vector2 direction = new Vector2 (Mathf.Cos(theta), Mathf.Sin(theta)); //TODO
+		float theta = Mathf.Deg2Rad * rotControl.getCurrent ();
+		Vector2 direction = new Vector2 (Mathf.Cos(theta), Mathf.Sin(theta));
 		Vector2 vel = direction * velControl.getCurrent ();
 		Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, theta));
 		loadedThrowable = Account.spawnRandom (spawnpoint, true, deck);
@@ -91,6 +120,10 @@ public class CannonLogic : MonoBehaviour {
 		loadedThrowable.GetComponent<Team> ().team = team;
 		loadedThrowable.GetComponent<FirstCollision> ().hasBeenLaunched ();
 		//Let it through the one way wall
+	}
+
+	private void resetCannon() {
+		velControl.resetPower ();
 	}
 		
 }
