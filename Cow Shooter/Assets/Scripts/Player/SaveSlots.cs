@@ -26,8 +26,6 @@ public class SaveSlots : MonoBehaviour {
 
 		haveOneInstance ();
 
-		chosenSave = PlayerAccount.createPlayerData (savesFolder + "/" + "default");
-
 		if (!Directory.Exists (savesFolder)) {
 			Directory.CreateDirectory (savesFolder);
 		}

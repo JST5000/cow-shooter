@@ -49,8 +49,10 @@ public class DisplayScoreScreen : MonoBehaviour {
 		result.levelName = LevelLoader.chosenLevel.levelName;
 		scoreScreen.GetComponentInChildren<ScoreboardLogic> ().updateScore ();
 		result.score = getBlueScore ();
-		SaveSlots.currentSaveSlots.chosenSave.accountInfo.scores.updateScore (result);
-		SaveSlots.currentSaveSlots.chosenSave.savePlayerData ();
+		if ((int)result.score > (int)getRedScore ()) {
+			SaveSlots.currentSaveSlots.chosenSave.accountInfo.scores.updateScore (result);
+			SaveSlots.currentSaveSlots.chosenSave.savePlayerData ();
+		}
 	}
 
 	public void displayScore() {

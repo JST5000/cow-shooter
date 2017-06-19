@@ -10,7 +10,8 @@ public class SceneShift : MonoBehaviour {
         SceneManager.LoadScene(sceneName);
     }
 
-	public void workaround() {
-
+	public void localSceneShift(string sceneName)
+	{
+		SceneManager.LoadScene(sceneName);
 	}
 }
