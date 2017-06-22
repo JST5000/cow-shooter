@@ -9,6 +9,8 @@ public class CannonLogic : MonoBehaviour {
 
 	public Account deck;
 
+	public MovePower indicator;
+
 	public Vector3 spawnpoint;
 	public bool isLeft;
 
@@ -21,10 +23,11 @@ public class CannonLogic : MonoBehaviour {
 
 	private int numberOfFired;
 
-	void Start () {
+	void Awake () {
 		instantiateVelControl ();
 		instantiateRotControl ();
 		getDeck ();
+		initializeIndicator ();
 		getControls();
 		assignTeam ();
 		getThrowableInstanceHolder ();
@@ -37,14 +40,23 @@ public class CannonLogic : MonoBehaviour {
 		velControl.min = 6;
 		velControl.milliUntilMaxPower = 750;
 		velControl.originalIncreasing = true;
+		velControl.resetPower ();
 	}
 
 	private void instantiateRotControl() {
 		rotControl = new PowerControl ();
-		rotControl.max = 80;
-		rotControl.min = 0;
-		rotControl.milliUntilMaxPower = 2000;
+		if (isLeft) {
+			rotControl.max = 60;
+			rotControl.min = 0;
+			rotControl.originalIncreasing = true;
+		} else {
+			rotControl.max = 180;
+			rotControl.min = 120;
+			rotControl.originalIncreasing = false;
+		}
+		rotControl.milliUntilMaxPower = 1000;
 		rotControl.originalIncreasing = isLeft;
+		rotControl.resetPower ();
 	}
 
 	private void getDeck() {
@@ -61,6 +73,12 @@ public class CannonLogic : MonoBehaviour {
 				deck = SaveSlots.currentSaveSlots.redTeamSave;
 			}
 		}
+	}
+
+	private void initializeIndicator() {
+		indicator = gameObject.AddComponent<MovePower> ();
+		indicator.pow = velControl;
+		indicator.isLeft = isLeft;
 	}
 
 	private void assignTeam() {

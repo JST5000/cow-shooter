@@ -14,14 +14,20 @@ public class PowerControl {
 	private bool increasing;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		milliUntilMaxPower = 750;
+		min = 0;
+		max = 1;
 		resetPower ();
 	}
 
 	public void resetPower() {
 		increasing = originalIncreasing;
-		curr = min;
+		if (originalIncreasing) {
+			curr = min;
+		} else {
+			curr = max;
+		}
 	}
 
 	public float getCurrent() {
