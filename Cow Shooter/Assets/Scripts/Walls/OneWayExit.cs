@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OneWayExit : MonoBehaviour {
 
+	public GameObject wall;
+
 	void OnCollisionExit2D(Collision2D col) {
 		reinstateCollisionWith (col.collider);
 	}

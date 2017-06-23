@@ -19,9 +19,10 @@ public class CannonLogic : MonoBehaviour {
 
 	private GameObject throwableInstanceHolder;
 	private GameObject loadedThrowable;
-	private bool loaded;
 
 	private int numberOfFired;
+
+	private AmmoHolder ammunition;
 
 	void Awake () {
 		instantiateVelControl ();
@@ -31,7 +32,7 @@ public class CannonLogic : MonoBehaviour {
 		getControls();
 		assignTeam ();
 		getThrowableInstanceHolder ();
-		loaded = true;
+		getAmmunition ();
 	}
 
 	private void instantiateVelControl() {
@@ -105,8 +106,15 @@ public class CannonLogic : MonoBehaviour {
 		throwableInstanceHolder = GameObject.Find ("ThrowableInstanceHolder");
 	}
 
+	private void getAmmunition() {
+		ammunition = gameObject.AddComponent<AmmoHolder> ();
+		ammunition.displacement = .4f;
+		ammunition.heightDisp = .3f;
+		ammunition.farthestLeftLoc = new Vector2 (transform.position.x - ammunition.displacement/2, transform.position.y);
+	}
+
 	void Update () {
-		if (loaded) { 
+		if (ammunition.hasAmmo()) { 
 			if (inputs.inputUp ()) {
 				fire ();
 				resetCannon ();
@@ -126,6 +134,8 @@ public class CannonLogic : MonoBehaviour {
 	}
 
 	private void fire() {
+		ammunition.useAmmo ();
+
 		float theta = Mathf.Deg2Rad * rotControl.getCurrent ();
 		Vector2 direction = new Vector2 (Mathf.Cos(theta), Mathf.Sin(theta));
 		Vector2 vel = direction * velControl.getCurrent ();
@@ -137,7 +147,6 @@ public class CannonLogic : MonoBehaviour {
 
 		loadedThrowable.GetComponent<Team> ().team = team;
 		loadedThrowable.GetComponent<FirstCollision> ().hasBeenLaunched ();
-		//Let it through the one way wall
 	}
 
 	private void resetCannon() {

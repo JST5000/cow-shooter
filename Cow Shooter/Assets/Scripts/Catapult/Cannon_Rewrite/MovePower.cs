@@ -7,7 +7,7 @@ public class MovePower : MonoBehaviour {
 	public PowerControl pow;
 	public bool isLeft;
 
-	private GameObject movable;
+	protected GameObject movable;
     private float totalDistance;
 	private float offset = .15f;
     private float position;
@@ -28,13 +28,18 @@ public class MovePower : MonoBehaviour {
 			position = totalDistance * (percent / 100) - totalDistance / 2;
 			movable.GetComponent<Transform> ().localPosition = new Vector3 (position, GetComponentInChildren<Transform> ().localPosition.y);
 		}
+		otherActions ();
 	}
 
-	public void updateMovable() {
+	protected virtual void updateMovable() {
 		if (isLeft) {
 			movable = GameObject.Find ("Left Powerbar/PowerIndicator");
 		} else {
 			movable = GameObject.Find ("Right Powerbar/PowerIndicator");
 		}
+	}
+
+	protected virtual void otherActions() {
+		//stub
 	}
 }

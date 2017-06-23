@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class OneWayEntrance : MonoBehaviour {
 
-	public GameObject exit;
+	public GameObject wall;
+	public bool isExit;
 
 	void OnTriggerEnter2D(Collider2D col) {
-		exit.GetComponent<OneWayExit> ().ignoreCollisionWith (col);
+		if (!isExit) {
+			wall.GetComponent<OneWayExit> ().ignoreCollisionWith (col);
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D col) {
+		print ("Exited");
+		if (isExit) {
+			wall.GetComponent<OneWayExit> ().reinstateCollisionWith (col);
+		}
 	}
 }
