@@ -14,7 +14,6 @@ public class OneWayEntrance : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D(Collider2D col) {
-		print ("Exited");
 		if (isExit) {
 			wall.GetComponent<OneWayExit> ().reinstateCollisionWith (col);
 		}

@@ -6,7 +6,6 @@ public class AmmoHolder : MonoBehaviour {
 
 	public Vector2 farthestLeftLoc;
 	public float displacement;
-	public float heightDisp;
 
 	private int maxAmmo;
 	private int currentAmmo;
@@ -51,7 +50,7 @@ public class AmmoHolder : MonoBehaviour {
 		for (int i = 0; i < maxAmmo; i++) {
 			ammoInstances.Add (Instantiate (ammoPrefab, inSceneAmmoHolder.transform));
 			ammoInstances [i].transform.localPosition = new Vector2 (farthestLeftLoc.x + i * displacement,
-				farthestLeftLoc.y + heightDisp);
+				farthestLeftLoc.y);
 		}
 	}
 
@@ -73,5 +72,6 @@ public class AmmoHolder : MonoBehaviour {
 	private void addSelfToReloader () {
 		GameObject.Find ("Loading_Bar/PowerIndicator").GetComponent<MoveLoadingPower> ().ammoStorages.Add (this);
 	}
+
 }
                                                                                                     

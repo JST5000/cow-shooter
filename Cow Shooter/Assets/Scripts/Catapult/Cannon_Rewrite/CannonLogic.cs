@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CannonLogic : MonoBehaviour {
 
-	public PowerControl velControl;
-	public PowerControl rotControl;
+	private PowerControl velControl;
+	private PowerControl rotControl;
 
-	public Account deck;
+	private Account deck;
 
-	public MovePower indicator;
+	private MovePower indicator;
+
+	private InitialUI gameStartIndicator;
 
 	public Vector3 spawnpoint;
 	public bool isLeft;
@@ -20,8 +22,6 @@ public class CannonLogic : MonoBehaviour {
 	private GameObject throwableInstanceHolder;
 	private GameObject loadedThrowable;
 
-	private int numberOfFired;
-
 	private AmmoHolder ammunition;
 
 	void Awake () {
@@ -29,6 +29,7 @@ public class CannonLogic : MonoBehaviour {
 		instantiateRotControl ();
 		getDeck ();
 		initializeIndicator ();
+		assignGameStartIndicator ();
 		getControls();
 		assignTeam ();
 		getThrowableInstanceHolder ();
@@ -82,6 +83,10 @@ public class CannonLogic : MonoBehaviour {
 		indicator.isLeft = isLeft;
 	}
 
+	private void assignGameStartIndicator() {
+		gameStartIndicator = GameObject.Find ("Global_Scripts").GetComponent<InitialUI> ();
+	}
+
 	private void assignTeam() {
 		if (isLeft) {
 			team = 0;
@@ -108,29 +113,32 @@ public class CannonLogic : MonoBehaviour {
 
 	private void getAmmunition() {
 		ammunition = gameObject.AddComponent<AmmoHolder> ();
-		ammunition.displacement = .4f;
-		ammunition.heightDisp = .3f;
-		ammunition.farthestLeftLoc = new Vector2 (transform.position.x - ammunition.displacement/2, transform.position.y);
+		if (isLeft) {
+			ammunition.displacement = .8f;
+			ammunition.farthestLeftLoc = new Vector2 (-9.4f, 4.3f);
+		} else {
+			ammunition.displacement = .8f;
+			ammunition.farthestLeftLoc = new Vector2 (9.4f - 2 * ammunition.displacement, 4.3f);
+		}
 	}
 
 	void Update () {
-		if (ammunition.hasAmmo()) { 
-			if (inputs.inputUp ()) {
-				fire ();
-				resetCannon ();
-				numberOfFired++;
-				print ("fired" + numberOfFired);
-			}
+		if (gameStartIndicator.isGamePlaying () && Time.deltaTime != 0) {
+			if (ammunition.hasAmmo ()) { 
+				if (inputs.inputUp ()) {
+					fire ();
+					resetCannon ();
+				}
 
-			if (inputs.inputContinuous ()) {
-				velControl.changePower ();
-			} else {
-				rotControl.changePower ();
-				gameObject.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, rotControl.getCurrent ()));
-			}
-			inputs.informAI (velControl.getCurrentPercent (), rotControl.getCurrentPercent());
-		} 
-
+				if (inputs.inputContinuous ()) {
+					velControl.changePower ();
+				} else {
+					rotControl.changePower ();
+					gameObject.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, rotControl.getCurrent ()));
+				}
+				inputs.informAI (velControl.getCurrentPercent (), rotControl.getCurrentPercent ());
+			} 
+		}
 	}
 
 	private void fire() {
