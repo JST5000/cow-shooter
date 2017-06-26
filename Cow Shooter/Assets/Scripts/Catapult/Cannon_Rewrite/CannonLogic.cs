@@ -48,7 +48,7 @@ public class CannonLogic : MonoBehaviour {
 	private void instantiateRotControl() {
 		rotControl = new PowerControl ();
 		if (isLeft) {
-			rotControl.max = 60;
+			rotControl.max = 70;
 			rotControl.min = 0;
 			rotControl.originalIncreasing = true;
 		} else {
