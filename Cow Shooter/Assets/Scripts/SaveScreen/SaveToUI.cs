@@ -27,8 +27,7 @@ public class SaveToUI : MonoBehaviour {
 				item.text = save.accountInfo.username;
 			}
 			if (item.gameObject.name == "CampaignPercent") {
-				item.text = "-1%";
-				//item.text = save.accountInfo.campaignPercent;
+				item.text = LevelLibrary.getScorePercent(save.accountInfo.scores.highScores) + "%";
 			}
 		}
 
