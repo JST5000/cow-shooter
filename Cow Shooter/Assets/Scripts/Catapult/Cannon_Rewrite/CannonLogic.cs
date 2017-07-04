@@ -49,7 +49,7 @@ public class CannonLogic : MonoBehaviour {
 		rotControl = new PowerControl ();
 		if (isLeft) {
 			rotControl.max = 70;
-			rotControl.min = 0;
+			rotControl.min = 20;
 			rotControl.originalIncreasing = true;
 		} else {
 			rotControl.max = 180;
@@ -62,15 +62,15 @@ public class CannonLogic : MonoBehaviour {
 	}
 
 	private void getDeck() {
-		if (Settings.currentPreferences.enableAI) {
-			if (LevelLoader.chosenLevel != null) {
-				deck = LevelLoader.chosenLevel.enemy;
-			} else {
-				print ("Could not retrieve enemy deck");
-			}
+		if (isLeft) {
+			deck = SaveSlots.currentSaveSlots.blueTeamSave;
 		} else {
-			if (isLeft) {
-				deck = SaveSlots.currentSaveSlots.blueTeamSave;
+			if (Settings.currentPreferences.enableAI) {
+				if (LevelLoader.chosenLevel != null) {
+					deck = LevelLoader.chosenLevel.enemy;
+				} else {
+					print ("Could not retrieve enemy deck");
+				}
 			} else {
 				deck = SaveSlots.currentSaveSlots.redTeamSave;
 			}
@@ -96,10 +96,14 @@ public class CannonLogic : MonoBehaviour {
 	}
 
 	private void getControls() {
-		if (Settings.currentPreferences.enableAI) {
-			inputs = new AIControls ();
-		} else {
+		if (isLeft) {
 			inputs = new PlayerControls ();
+		} else {
+			if (Settings.currentPreferences.enableAI) {
+				inputs = new AIControls ();
+			} else {
+				inputs = new PlayerControls ();
+			}
 		}
 		if (inputs is PlayerControls) {
 			PlayerControls reference = (PlayerControls)inputs;
@@ -124,6 +128,11 @@ public class CannonLogic : MonoBehaviour {
 
 	void Update () {
 		if (gameStartIndicator.isGamePlaying () && Time.deltaTime != 0) {
+			if(!inputs.inputContinuous()) {
+				rotControl.changePower ();
+				gameObject.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, rotControl.getCurrent ()));
+			}
+
 			if (ammunition.hasAmmo ()) { 
 				if (inputs.inputUp ()) {
 					fire ();
@@ -132,10 +141,7 @@ public class CannonLogic : MonoBehaviour {
 
 				if (inputs.inputContinuous ()) {
 					velControl.changePower ();
-				} else {
-					rotControl.changePower ();
-					gameObject.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, rotControl.getCurrent ()));
-				}
+				} 
 				inputs.informAI (velControl.getCurrentPercent (), rotControl.getCurrentPercent ());
 			} 
 		}

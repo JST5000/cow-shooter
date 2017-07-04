@@ -7,14 +7,17 @@ public class AIControls : Controls {
 	public float maxRotPercent = 80;
 	public float minRotPercent = 20;
 
-	public float maxVelPercent = 20;
-	public float minVelPercent = 60;
+	public float maxVelPercent = 70;
+	public float minVelPercent = 20;
 
 	private float goalVel = -1;
 	private float goalRot = -1;
 
 	private float currVel;
 	private float currRot;
+
+	private float velTolerance;
+	private float rotTolerance;
 
 	public override bool inputDown() {
 		return isNearGoalRot();
@@ -45,14 +48,17 @@ public class AIControls : Controls {
 		}
 		currVel = velPercent;
 		currRot = rotPercent;
+
+		velTolerance = .1f * (maxVelPercent - minVelPercent);
+		rotTolerance = .1f * (maxRotPercent - minRotPercent);
 	}
 
 	private bool isNearGoalRot() {
-		return isWithinTolerance(goalRot, currRot, .5f);
+		return isWithinTolerance(goalRot, currRot, rotTolerance);
 	}
 
 	private bool isNearGoalVel() {
-		return isWithinTolerance (goalVel, currVel, .5f);
+		return isWithinTolerance (goalVel, currVel, velTolerance);
 	}
 
 	private bool isWithinTolerance(float first, float second, float tolerance) {
