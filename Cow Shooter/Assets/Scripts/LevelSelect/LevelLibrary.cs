@@ -8,19 +8,21 @@ public class LevelLibrary : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		loadLevels ();
+		loadLevelsOnce ();
 	}
 	
-	private void loadLevels() {
-		allLevels.Clear ();
-		loadPirate ();
-		loadKid ();
-		for (int i = 0; i < 13; i++) {
-			loadFiller (i); //This is to make the UI testable before we complete all levels
+	public static void loadLevelsOnce() {
+		if (allLevels.Count == 0) {
+			allLevels.Clear ();
+			loadPirate ();
+			loadKid ();
+			for (int i = 0; i < 13; i++) {
+				loadFiller (i); //This is to make the UI testable before we complete all levels
+			}
 		}
 	}
 
-	private void loadPirate() {
+	private static void loadPirate() {
 		string name = "Pirate";
 		PlayerData data = new PlayerData ();
 		data.throwableNames.Add ("Bomb");
@@ -35,7 +37,7 @@ public class LevelLibrary : MonoBehaviour {
 		allLevels.Add (newLevel);
 	}
 
-	private void loadKid() {
+	private static void loadKid() {
 		string name = "Kid";
 		PlayerData data = new PlayerData ();
 		data.throwableNames.Add ("BouncyHouse");
@@ -50,7 +52,7 @@ public class LevelLibrary : MonoBehaviour {
 		allLevels.Add (newLevel);
 	}
 
-	private void loadFiller(int index) {
+	private static void loadFiller(int index) {
 		string name = "FILLER LEVEL " + index;
 		PlayerData data = new PlayerData ();
 		data.throwableNames.Add ("Tetris_T");
@@ -63,6 +65,28 @@ public class LevelLibrary : MonoBehaviour {
 
 		Level newLevel = Level.createLevel (name, enemy, thresholds);
 		allLevels.Add (newLevel);
+	}
+
+	public static int getScorePercent(List<Score> scores) {
+		LevelLibrary.loadLevelsOnce ();
+		int percent = 0;
+		int stars = 0;
+		int total = 3 * LevelLibrary.allLevels.Count;
+		foreach (Score scr in scores) {
+			foreach(Level lvl in LevelLibrary.allLevels) {
+				if (scr.levelName == lvl.levelName) {
+					foreach (int threshold in lvl.starThresholds) {
+						if (scr.score >= threshold && scr.score != 0) {
+							stars++;
+						}
+					}
+				}
+			}
+		}
+		if (total != 0) {
+			percent = (int)(stars / (float)total * 100);
+		}
+		return percent;
 	}
 
 

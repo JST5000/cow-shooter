@@ -97,7 +97,7 @@ public class SaveSlots : MonoBehaviour {
 		newSave.accountInfo.username = username;
 		newSave.savePlayerData ();
 
-		saves.Add (newSave);
+		saves.Insert (0, newSave);
 		info.fileNames.Add (filePath);
 		saveAccountInfo ();
 	}

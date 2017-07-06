@@ -10,27 +10,19 @@ public class OneWayWalls : MonoBehaviour {
 		ignoreList = new List<Collider2D> ();
 	}
 		
-	void OnCollision2DEnter(Collision2D col) {
-		if (col.gameObject.tag == "Throwable" && !col.gameObject.GetComponent<FirstCollision> ().collidedAfterLaunch) {
+	void OnCollisionEnter2D(Collision2D col) {
+		print ((col.gameObject.tag == "Throwable") + " " + (!col.gameObject.GetComponent<FirstCollision> ().hasPassedThrough));
+		if (col.gameObject.tag == "Throwable" && !col.gameObject.GetComponent<FirstCollision> ().hasPassedThrough) {
 			col.collider.isTrigger = true;
-			col.collider.gameObject.GetComponent<FirstCollision> ().startLaunchedTimer ();
+			col.collider.gameObject.GetComponent<FirstCollision> ().hasPassedThrough = true;
 		}
 	}
 
 	void OnCollision2DExit(Collision2D col) {
 		if (ignoreList.Contains (col.collider)) {
-			reinstateCollisionWith (col.collider);
+		//	reinstateCollisionWith (col.collider);
 			col.collider.isTrigger = false;
 			ignoreList.Remove (col.collider);
 		}
-	}
-
-	public void ignoreCollisionWith(Collider2D col) {
-		Physics2D.IgnoreCollision (col, GetComponent<Collider2D> (), true);
-		ignoreList.Add (col);
-	}
-
-	public void reinstateCollisionWith(Collider2D col) {
-		Physics2D.IgnoreCollision (col, GetComponent<Collider2D> (), false);
 	}
 }

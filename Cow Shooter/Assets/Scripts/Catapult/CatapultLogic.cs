@@ -166,7 +166,6 @@ public class CatapultLogic : MonoBehaviour {
     {
 		loadedThrowable = instantiateRandomThrowable();
 		GetComponent<LaunchSim> ().startSim (loadedThrowable);
-		gate.ignoreCollisionWith (loadedThrowable.GetComponent<Collider2D> ());
 		loaded = true;
     }
 
