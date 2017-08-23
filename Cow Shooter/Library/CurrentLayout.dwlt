@@ -176,8 +176,8 @@ MonoBehaviour:
     y: 0
     width: 428
     height: 475
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -366,9 +366,9 @@ MonoBehaviour:
     height: 454
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
+    m_SelectedIDs: a8250000
     m_LastClickedID: 0
-    m_ExpandedIDs: 4c8cffff909cffffdceaffffecf5ffff0afbffffbcfbffff00000000b23c0000fc3d0000663e0000f0550000
+    m_ExpandedIDs: 78caffff40cbffff44e0fffff8eeffff2efbffffe4fbffff00000000d22c0000942d0000aa3800006c390000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -387,7 +387,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
   m_ExpandedScenes:
-  - Game Arena
+  - Main Menu
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -418,14 +418,14 @@ MonoBehaviour:
     width: 772
     height: 454
   m_SceneLighting: 1
-  lastFramingTime: 395.2871465636462
+  lastFramingTime: 130.35700584005127
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.5265795, y: 3.4108975, z: 0}
+    m_Target: {x: 0.5988799, y: 2.6132643, z: 0}
     speed: 2
-    m_Value: {x: -0.5265795, y: 3.4108975, z: 0}
+    m_Value: {x: 0.5988799, y: 2.6132643, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -452,9 +452,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10.450807
+    m_Target: 20.713507
     speed: 2
-    m_Value: 10.450807
+    m_Value: 20.713507
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -528,33 +528,33 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts/Gamescreen_UI
+    - Assets/_Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Gamescreen_UI
+  - Assets/_Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\aim4m\OneDrive\Documents\GitHub\cow-shooter\Cow Shooter
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 302}
-    m_SelectedIDs: 32270000
-    m_LastClickedID: 10034
-    m_ExpandedIDs: 00000000522500002a260000422600006026000064260000ec2600003227000002290000042900005429000056290000b82900008e2a0000122b0000402b00004a2b0000662b00008c2c00008e2c0000902c0000922c000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 127}
+    m_SelectedIDs: 1c260000
+    m_LastClickedID: 9756
+    m_ExpandedIDs: 00000000462500001e260000362600005426000058260000e026000026270000f6280000f8280000482900004a290000ac290000902a0000142b0000422b00004c2b0000682b00008e2c0000902c0000922c0000942c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Gamescreen_UI
-      m_OriginalName: Gamescreen_UI
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 10034
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
@@ -568,7 +568,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000522500002a260000422600006026000064260000ec26000032270000e628000002290000042900005429000056290000b82900008e2a0000122b0000402b00004a2b0000522b0000662b00008c2c00008e2c0000902c0000922c0000
+    m_ExpandedIDs: 00000000462500001e260000362600005426000058260000e026000026270000f6280000f8280000482900004a290000ac290000902a0000142b0000422b00004c2b0000682b00008e2c0000902c0000922c0000942c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
